@@ -1,5 +1,4 @@
-﻿using System;
-using DofusBot.Core.Network;
+﻿using DofusBot.Core.Network;
 
 namespace DofusBot.Packet.Messages.Connection
 {

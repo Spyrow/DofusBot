@@ -1,9 +1,5 @@
 ﻿using DofusBot.Core.Network;
-using DofusBot.Packet;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DofusBot.Packet.Messages.Handshake
 {

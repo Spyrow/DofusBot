@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DofusBot.Core.Network
+﻿namespace DofusBot.Core.Network
 {
 
     public abstract class NetworkMessage

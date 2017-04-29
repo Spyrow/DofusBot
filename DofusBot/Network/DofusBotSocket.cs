@@ -1,5 +1,4 @@
 ﻿using DofusBot.Core.Network;
-using DofusBot.Packet;
 using System;
 using System.Net;
 using System.Net.Sockets;

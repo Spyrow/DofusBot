@@ -13,7 +13,6 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DofusBot.Interface
@@ -28,7 +27,6 @@ namespace DofusBot.Interface
             InitializeComponent();
             _deserializer = new DofusBotPacketDeserializer();
             _deserializer.ReceivePacket += this.OnReceivedPacket;
-            _socket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse("213.248.126.40"), 5555));
 
             logTextBox.Font = new Font("Verdana", 8, FontStyle.Regular);
         }
@@ -104,6 +102,7 @@ namespace DofusBot.Interface
         {
             if (accountNameTextBox.Text != "" && accountPasswdTextBox.Text != "")
             {
+                _socket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse("213.248.126.40"), 5555));
                 _socket.ConnectEndListen();
             }
             else
@@ -112,7 +111,11 @@ namespace DofusBot.Interface
 
         public void OnReceivedPacket(object source, PacketEventArg e)
         {
+            if (e.Packet == null)
+                Log(LogMessageType.Administrateurs, "Packet Null");
+
             ServerPacketEnum packetType = (ServerPacketEnum) e.Packet.MessageID;
+
             switch (packetType)
             {
                 case ServerPacketEnum.ProtocolRequired:
@@ -130,8 +133,6 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.IdentificationFailedMessage:
                     Log(LogMessageType.Administrateurs, "Identification Failed! Try Again..");
-                    accountNameTextBox.Text = "";
-                    accountPasswdTextBox.Text = "";
                     break;
                 case ServerPacketEnum.IdentificationSuccessMessage:
                     IdentificationSuccessMessage idSuccess = (IdentificationSuccessMessage)e.Packet;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DofusBot.Packet.Types.Connection
+﻿namespace DofusBot.Packet.Types.Connection
 {
     public class GameServerInformations
     {
@@ -17,6 +11,7 @@ namespace DofusBot.Packet.Types.Connection
         public virtual short TypeID { get { return ProtocolId; } }
 
         public ushort ObjectID { get; set; }
+        public byte ServerType { get; set; }
         public byte Status { get; set; }
         public byte Completion { get; set; }
         public bool IsSelectable { get; set; }
@@ -28,9 +23,10 @@ namespace DofusBot.Packet.Types.Connection
         {
         }
 
-        public GameServerInformations(ushort objectId, byte status, byte completion, bool isSelectable, byte charactersCount, byte charactersSlots, double date)
+        public GameServerInformations(ushort objectId, byte serverType, byte status, byte completion, bool isSelectable, byte charactersCount, byte charactersSlots, double date)
         {
             ObjectID = objectId;
+            ServerType = serverType;
             Status = status;
             Completion = completion;
             IsSelectable = isSelectable;
@@ -41,7 +37,8 @@ namespace DofusBot.Packet.Types.Connection
 
         public virtual void Serialize(IDataWriter writer)
         {
-            writer.WriteUShort(ObjectID);
+            writer.WriteVarShort(ObjectID);
+            writer.WriteByte(ServerType);
             writer.WriteByte(Status);
             writer.WriteByte(Completion);
             writer.WriteBoolean(IsSelectable);
@@ -52,7 +49,8 @@ namespace DofusBot.Packet.Types.Connection
 
         public virtual void Deserialize(IDataReader reader)
         {
-            ObjectID = reader.ReadUShort();
+            ObjectID = reader.ReadVarUhShort();
+            ServerType = reader.ReadByte();
             Status = reader.ReadByte();
             Completion = reader.ReadByte();
             IsSelectable = reader.ReadBoolean();

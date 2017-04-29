@@ -1,9 +1,6 @@
 ﻿using DofusBot.Core.Network;
 using DofusBot.Core.Network.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace DofusBot.Packet.Messages.Connection
 {
