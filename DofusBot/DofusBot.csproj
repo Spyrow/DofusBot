@@ -46,6 +46,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>DofusIcon.ico</ApplicationIcon>
@@ -79,6 +80,7 @@
     <Compile Include="Network\DofusBotBuffer.cs" />
     <Compile Include="Network\DofusBotPacketDeserializer.cs" />
     <Compile Include="Network\DofusBotSocket.cs" />
+    <Compile Include="Network\NullPacketEventArg.cs" />
     <Compile Include="Network\PacketBufferEventArg.cs" />
     <Compile Include="Network\PacketEventArg.cs" />
     <Compile Include="Packet\ClientPacketEnum.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Packet\Messages\Connection\IdentificationSuccessMessage.cs" />
     <Compile Include="Packet\Messages\Connection\IdentificationFailedMessage.cs" />
     <Compile Include="Packet\Messages\Connection\IdentificationMessage.cs" />
+    <Compile Include="Packet\Messages\Connection\SelectedServerDataMessage.cs" />
     <Compile Include="Packet\Messages\Connection\ServerListMessage.cs" />
     <Compile Include="Packet\Messages\Connection\ServerSelectionMessage.cs" />
     <Compile Include="Packet\Messages\Handshake\ProtocolRequired.cs" />

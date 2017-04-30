@@ -11,11 +11,16 @@ namespace DofusBot.Network
     public class DofusBotPacketDeserializer
     {
         public event EventHandler<PacketEventArg> ReceivePacket;
-        public delegate void ReceivePacketBufferEventHandler(PacketEventArg e);
+        public delegate void ReceivePacketEventHandler(PacketEventArg e);
+        public event EventHandler<NullPacketEventArg> ReceiveNullPacket;
+        public delegate void ReceiveNullPacketEventHandler(NullPacketEventArg e);
 
-        protected virtual void OnReceivePacket(PacketEventArg e)
+        protected virtual void OnReceivePacket(ServerPacketEnum packetType, PacketEventArg e)
         {
-            ReceivePacket.Raise(this, e);
+            if (e.Packet == null)
+                ReceiveNullPacket.Raise(this, new NullPacketEventArg(packetType));
+            else
+                ReceivePacket.Raise(this, e);
         }
 
         public void GetPacket(object obj, PacketBufferEventArg e)
@@ -23,7 +28,7 @@ namespace DofusBot.Network
             ServerPacketEnum packetType = (ServerPacketEnum) e.PacketId;
             BigEndianReader reader = new BigEndianReader(e.Data);
             NetworkMessage msg = MessageReceiver.BuildMessage((uint) packetType, reader);
-            OnReceivePacket(new PacketEventArg(msg));
+            OnReceivePacket(packetType, new PacketEventArg(msg));
         }
     }
 }

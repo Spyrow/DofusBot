@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DofusBot.Interface
@@ -26,14 +27,20 @@ namespace DofusBot.Interface
         {
             InitializeComponent();
             _deserializer = new DofusBotPacketDeserializer();
-            _deserializer.ReceivePacket += this.OnReceivedPacket;
+            _deserializer.ReceivePacket += OnReceivedPacket;
+            _deserializer.ReceiveNullPacket += OnReceivedNullPacket;
 
             logTextBox.Font = new Font("Verdana", 8, FontStyle.Regular);
         }
 
         public enum LogMessageType
         {
-            General, Equipe, Guilde, Alliance, Groupe, Commerce, Recrutement, Debutants, Administrateurs, Prive, Informations, Promotion, Kolizeum, 
+            General, Equipe, Guilde, Alliance, Groupe, Commerce, Recrutement, Debutants, Administrateurs, Prive, Informations, Promotion, Kolizeum
+        }
+
+        public enum ServerStatus: byte
+        {
+            Inconnu, HorsLigne, EnCoursDeDémarrage, EnLigne, Inaccessible, EnCoursDeSauvegarde, EnCoursDExtinction, Complet
         }
 
         private void Log(LogMessageType type, string Text)
@@ -92,8 +99,8 @@ namespace DofusBot.Interface
                 logTextBox.AppendText(DateTime.Now.ToLongTimeString());
                 logTextBox.AppendText("] " + Text + "\r\n");
                 logTextBox.SelectionColor = logTextBox.ForeColor;
-                logTextBox.Select(logTextBox.Text.Length, 0); // On place le curseur à la fin de la zone de texte.
-                logTextBox.ScrollToCaret(); // On descend la barre de défilement jusqu'au curseur.
+                logTextBox.Select(logTextBox.Text.Length, 0);
+                logTextBox.ScrollToCaret();
             };
             this.Invoke(log_callback);
         }
@@ -109,16 +116,20 @@ namespace DofusBot.Interface
                 Log(LogMessageType.Administrateurs, "You have to put your account informations above in order to connect...");
         }
 
+        public void OnReceivedNullPacket(object source, NullPacketEventArg e)
+        {
+            Log(LogMessageType.Administrateurs, "Packet id: { " + e.PacketType + "} is not implemented");
+        }
+
         public void OnReceivedPacket(object source, PacketEventArg e)
         {
-            if (e.Packet == null)
-                Log(LogMessageType.Administrateurs, "Packet Null");
-
             ServerPacketEnum packetType = (ServerPacketEnum) e.Packet.MessageID;
 
             switch (packetType)
             {
                 case ServerPacketEnum.ProtocolRequired:
+                    break;
+                case ServerPacketEnum.CredentialsAcknowledgementMessage:
                     break;
                 case ServerPacketEnum.HelloConnectMessage:
                     HelloConnectMessage helloConnectMessage = (HelloConnectMessage)e.Packet;
@@ -142,14 +153,40 @@ namespace DofusBot.Interface
                     ServerListMessage servers = (ServerListMessage)e.Packet;
                     Log(LogMessageType.Kolizeum, "CanCreateNewCharacter: " + servers.CanCreateNewCharacter);
                     Log(LogMessageType.Kolizeum, "AlreadyConnectedToServerId: " + servers.AlreadyConnectedToServerId);
+
+                    if (servers.AlreadyConnectedToServerId != 0)
+                    {
+                        ServerSelectionMessage serverSelection = new ServerSelectionMessage((ushort)servers.AlreadyConnectedToServerId);
+                        _socket.Send(serverSelection);
+                        break;
+                    }
+
                     for (int i = 0; i < servers.Servers.Count; i++)
                     {
                         GameServerInformations serverInfos = servers.Servers[i];
+
                         Log(LogMessageType.Kolizeum, "[Server] ID:" + serverInfos.ObjectID + " Status: " + serverInfos.Status + " IsSelectable: " + serverInfos.IsSelectable + " Completion: " + serverInfos.Completion + " | [" + serverInfos.CharactersCount + "/" + serverInfos.CharactersSlots + "] Characters.");
+
+                        if (serverInfos.CharactersCount >= 1)
+                        {
+                            if (serverInfos.IsSelectable && (ServerStatus)serverInfos.Status == ServerStatus.EnLigne)
+                            {
+                                ServerSelectionMessage serverSelection = new ServerSelectionMessage(serverInfos.ObjectID);
+                                _socket.Send(serverSelection);
+                            }
+                            else
+                            {
+                                Log(LogMessageType.Administrateurs, "Wait, your server status is " + (ServerStatus) serverInfos.Status);
+                            }
+                        }
                     }
                     break;
+                case ServerPacketEnum.SelectedServerDataMessage:
+                    SelectedServerDataMessage selected = (SelectedServerDataMessage)e.Packet;
+                    Log(LogMessageType.Informations, "Connected to ServerID: " + selected.ServerId);
+                    break;
                 default:
-                    Log(LogMessageType.Administrateurs, "Packet id : {" + e.Packet.MessageID + "} is not implemented");
+                    Log(LogMessageType.Administrateurs, "Packet id : {" + e.Packet.MessageID + "} is not treated.");
                     break;
             }
         }

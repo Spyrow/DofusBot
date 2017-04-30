@@ -12,21 +12,21 @@ namespace DofusBot.Packet.Messages.Connection
         public const uint ProtocolId = 40;
         public override uint MessageID { get { return ProtocolId; } }
 
-        private short _serverId;
+        private ushort _serverId;
 
-        public ServerSelectionMessage(short serverId)
+        public ServerSelectionMessage(ushort serverId)
         {
             _serverId = serverId;
         }
 
         public override void Serialize(IDataWriter writer)
         {
-            writer.WriteShort(_serverId);
+            writer.WriteVarShort(_serverId);
         }
 
         public override void Deserialize(IDataReader reader)
         {
-            _serverId = reader.ReadShort();
+            _serverId = reader.ReadVarUhShort();
         }
     }
 }

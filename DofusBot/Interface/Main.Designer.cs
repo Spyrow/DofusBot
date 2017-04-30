@@ -42,9 +42,10 @@
             // accountPasswdLabel
             // 
             this.accountPasswdLabel.AutoSize = true;
+            this.accountPasswdLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.accountPasswdLabel.Location = new System.Drawing.Point(82, 48);
             this.accountPasswdLabel.Name = "accountPasswdLabel";
-            this.accountPasswdLabel.Size = new System.Drawing.Size(53, 13);
+            this.accountPasswdLabel.Size = new System.Drawing.Size(69, 14);
             this.accountPasswdLabel.TabIndex = 1;
             this.accountPasswdLabel.Text = "Password";
             // 
@@ -52,20 +53,21 @@
             // 
             this.accountNameTextBox.Location = new System.Drawing.Point(156, 19);
             this.accountNameTextBox.Name = "accountNameTextBox";
-            this.accountNameTextBox.Size = new System.Drawing.Size(207, 20);
+            this.accountNameTextBox.Size = new System.Drawing.Size(207, 21);
             this.accountNameTextBox.TabIndex = 2;
             // 
             // accountPasswdTextBox
             // 
             this.accountPasswdTextBox.Location = new System.Drawing.Point(156, 45);
             this.accountPasswdTextBox.Name = "accountPasswdTextBox";
-            this.accountPasswdTextBox.PasswordChar = 'X';
-            this.accountPasswdTextBox.Size = new System.Drawing.Size(207, 20);
+            this.accountPasswdTextBox.PasswordChar = '*';
+            this.accountPasswdTextBox.Size = new System.Drawing.Size(207, 21);
             this.accountPasswdTextBox.TabIndex = 3;
             // 
             // connectionButton
             // 
             this.connectionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
+            this.connectionButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.connectionButton.ForeColor = System.Drawing.Color.White;
             this.connectionButton.Location = new System.Drawing.Point(417, 12);
             this.connectionButton.Name = "connectionButton";
@@ -78,9 +80,10 @@
             // accountNameLabel
             // 
             this.accountNameLabel.AutoSize = true;
+            this.accountNameLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.accountNameLabel.Location = new System.Drawing.Point(57, 22);
             this.accountNameLabel.Name = "accountNameLabel";
-            this.accountNameLabel.Size = new System.Drawing.Size(78, 13);
+            this.accountNameLabel.Size = new System.Drawing.Size(96, 14);
             this.accountNameLabel.TabIndex = 0;
             this.accountNameLabel.Text = "Account Name";
             // 
@@ -90,6 +93,7 @@
             this.groupBox1.Controls.Add(this.accountPasswdLabel);
             this.groupBox1.Controls.Add(this.accountNameTextBox);
             this.groupBox1.Controls.Add(this.accountPasswdTextBox);
+            this.groupBox1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";

@@ -1,0 +1,9 @@
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.Interface.Main.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.Properties.Resources.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.csproj.GenerateResource.Cache
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.exe.config
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.exe
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\RSA.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.exe
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.pdb
