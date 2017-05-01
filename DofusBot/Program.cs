@@ -14,15 +14,7 @@ namespace DofusBot
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Main main = new Main();
-            main.FormClosing += MainFormClosing;
-            Application.Run(main);
-            Console.WriteLine("I AM AT THE END OF THE MAIN");
-        }
-
-        public static void MainFormClosing(object source, FormClosingEventArgs e)
-        {
-            //
+            Application.Run(new Main());
         }
     }
 }

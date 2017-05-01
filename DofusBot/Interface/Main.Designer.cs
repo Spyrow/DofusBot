@@ -127,6 +127,7 @@
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "DofusBot";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

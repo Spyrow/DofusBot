@@ -16,7 +16,7 @@ namespace DofusBot.Interface
 {
     public partial class Main : Form
     {
-        private DofusBotSocket _socket;
+        private DofusBotSocket _ServerSocket;
         private DofusBotSocket _GameSocket;
         private DofusBotPacketDeserializer _deserializer;
         private object _ticket;
@@ -120,17 +120,17 @@ namespace DofusBot.Interface
                     {
                         string DofusIP = "213.248.126.40";
                         int DofusPort = 5555;
-                        _socket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(DofusIP), DofusPort));
+                        _ServerSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(DofusIP), DofusPort));
                         Log(LogMessageType.Informations, "Connexion en cours <" + DofusIP + ":" + DofusPort + ">");
-                        _socket.ConnectEndListen();
+                        _ServerSocket.ConnectEndListen();
 
                         connectionButton.Text = Disconnect;
                     }
                 }
                 else
                 {
-                    _socket.CloseSocket();
-                    _socket = null;
+                    _ServerSocket.CloseSocket();
+                    _ServerSocket = null;
                     
                     if (_GameSocket != null)
                     {
@@ -183,7 +183,7 @@ namespace DofusBot.Interface
                     VersionExtended version = new VersionExtended(2, 41, 1, 120116, 1, 0, 1, 1);
                     IdentificationMessage idm = new IdentificationMessage(false, false, false, version, "fr", credentials, 0, 0, new ushort[0]);
                     Log(LogMessageType.Informations, "Identification en cours...");
-                    _socket.Send(idm);
+                    _ServerSocket.Send(idm);
                     Log(LogMessageType.Administrateurs, "[Client] " + idm.PacketType);
                     break;
                 case ServerPacketEnum.LoginQueueStatusMessage:
@@ -192,9 +192,14 @@ namespace DofusBot.Interface
                         Log(LogMessageType.Informations, "Vous êtes en position " + loginQueueStatusMessage.Position + " sur " + loginQueueStatusMessage.Total + " dans la file d'attente.");
                     break;
                 case ServerPacketEnum.IdentificationFailedMessage:
-                    Log(LogMessageType.Administrateurs, "Identification échoué ! Veuillez recommencer.");
+                    Log(LogMessageType.Promotion, "Identification échouée ! Veuillez recommencer.");
                     Invoke((MethodInvoker)delegate
                     {
+                        if (_ServerSocket != null)
+                        {
+                            _ServerSocket.CloseSocket();
+                            _ServerSocket = null;
+                        }
                         connectionButton.Text = "Connexion";
                     });
                     break;
@@ -208,7 +213,7 @@ namespace DofusBot.Interface
                         if (i.CharactersCount > 0 && i.IsSelectable && (ServerStatus)i.Status == ServerStatus.EnLigne)
                         {
                             ServerSelectionMessage SSM = new ServerSelectionMessage(i.ObjectID);
-                            _socket.Send(SSM);
+                            _ServerSocket.Send(SSM);
                             Log(LogMessageType.Administrateurs, "[Client] " + SSM.PacketType);
                             break;
                         }
@@ -219,8 +224,8 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.SelectedServerDataMessage:
                     SelectedServerDataMessage selected = (SelectedServerDataMessage)e.Packet;
                     Log(LogMessageType.Informations, "Connecté au serveur : " + selected.ServerId);
-                    _socket.CloseSocket();
-                    _socket = null;
+                    _ServerSocket.CloseSocket();
+                    _ServerSocket = null;
                     _ticket = AES.AES.TicketTrans(selected.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selected.Address), selected.Port));
                     _GameSocket.ConnectEndListen();
@@ -228,8 +233,8 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.SelectedServerDataExtendedMessage:
                     SelectedServerDataExtendedMessage selectedExtended = (SelectedServerDataExtendedMessage)e.Packet;
                     Log(LogMessageType.Informations, "Connecté au serveur : " + selectedExtended.ServerId);
-                    _socket.CloseSocket();
-                    _socket = null;
+                    _ServerSocket.CloseSocket();
+                    _ServerSocket = null;
                     _ticket = AES.AES.TicketTrans(selectedExtended.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selectedExtended.Address), selectedExtended.Port));
                     _GameSocket.ConnectEndListen();
@@ -237,6 +242,31 @@ namespace DofusBot.Interface
                 default:
                     Log(LogMessageType.Administrateurs, "Packet: [" + e.Packet.MessageID + "] is not treated.");
                     break;
+            }
+        }
+
+        private void MainFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_ServerSocket != null || _GameSocket != null)
+            {
+                if (MessageBox.Show("Une connexion est en cours. Voulez-vous vraiment fermer le bot? Si oui, la déconnexion s'effectuera automatiquement.", "Attention", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (_ServerSocket != null)
+                    {
+                        _ServerSocket.CloseSocket();
+                        _ServerSocket = null;
+                    }
+                    if (_GameSocket != null)
+                    {
+                        _GameSocket.CloseSocket();
+                        _GameSocket = null;
+                    }
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }
