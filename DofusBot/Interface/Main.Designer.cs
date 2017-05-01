@@ -43,11 +43,11 @@
             // 
             this.accountPasswdLabel.AutoSize = true;
             this.accountPasswdLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accountPasswdLabel.Location = new System.Drawing.Point(82, 48);
+            this.accountPasswdLabel.Location = new System.Drawing.Point(58, 47);
             this.accountPasswdLabel.Name = "accountPasswdLabel";
-            this.accountPasswdLabel.Size = new System.Drawing.Size(69, 14);
+            this.accountPasswdLabel.Size = new System.Drawing.Size(92, 14);
             this.accountPasswdLabel.TabIndex = 1;
-            this.accountPasswdLabel.Text = "Password";
+            this.accountPasswdLabel.Text = "Mot de passe";
             // 
             // accountNameTextBox
             // 
@@ -73,7 +73,7 @@
             this.connectionButton.Name = "connectionButton";
             this.connectionButton.Size = new System.Drawing.Size(178, 78);
             this.connectionButton.TabIndex = 10;
-            this.connectionButton.Text = "Connect";
+            this.connectionButton.Text = "Connexion";
             this.connectionButton.UseVisualStyleBackColor = false;
             this.connectionButton.Click += new System.EventHandler(this.ConnectionButton_Click);
             // 
@@ -81,11 +81,11 @@
             // 
             this.accountNameLabel.AutoSize = true;
             this.accountNameLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accountNameLabel.Location = new System.Drawing.Point(57, 22);
+            this.accountNameLabel.Location = new System.Drawing.Point(42, 21);
             this.accountNameLabel.Name = "accountNameLabel";
-            this.accountNameLabel.Size = new System.Drawing.Size(96, 14);
+            this.accountNameLabel.Size = new System.Drawing.Size(108, 14);
             this.accountNameLabel.TabIndex = 0;
-            this.accountNameLabel.Text = "Account Name";
+            this.accountNameLabel.Text = "Nom de Compte";
             // 
             // groupBox1
             // 
@@ -100,7 +100,7 @@
             this.groupBox1.Size = new System.Drawing.Size(387, 78);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Account Informations";
+            this.groupBox1.Text = "Identifiants";
             // 
             // logTextBox
             // 

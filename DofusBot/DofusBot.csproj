@@ -107,6 +107,7 @@
     <Compile Include="Packet\Messages\Game\Approach\HelloGameMessage.cs" />
     <Compile Include="Packet\Messages\Handshake\ProtocolRequired.cs" />
     <Compile Include="Packet\Messages\Queues\LoginQueueStatusMessage.cs" />
+    <Compile Include="Packet\Messages\Security\CheckIntegrityMessage.cs" />
     <Compile Include="Packet\Messages\Security\RawDataMessage.cs" />
     <Compile Include="Packet\ServerPacketEnum.cs" />
     <Compile Include="Packet\TypeEnum.cs" />

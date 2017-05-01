@@ -27,8 +27,6 @@ namespace DofusBot.Network
 
         private void Listening()
         {
-            
-
             byte[] receiverBuffer;
             byte[] buffer;
             int bufferSize;
