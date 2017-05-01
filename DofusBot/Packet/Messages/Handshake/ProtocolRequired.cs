@@ -5,7 +5,7 @@ namespace DofusBot.Packet.Messages.Handshake
 {
     public class ProtocolRequired : NetworkMessage
     {
-        public ServerPacketEnum Type
+        public ServerPacketEnum PacketType
         {
             get { return ServerPacketEnum.ProtocolRequired; }
         }

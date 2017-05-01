@@ -1,9 +1,6 @@
 ﻿using DofusBot.Core;
 using DofusBot.Core.Network;
 using DofusBot.Packet;
-using DofusBot.Packet.Messages.Connection;
-using DofusBot.Packet.Messages.Handshake;
-using DofusBot.Packet.Messages.Queues;
 using System;
 
 namespace DofusBot.Network

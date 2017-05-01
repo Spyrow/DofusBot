@@ -4,7 +4,7 @@ namespace DofusBot.Packet.Messages.Game.Approach
 {
     public class AuthenticationTicketMessage : NetworkMessage
     {
-        public ClientPacketEnum Type
+        public ClientPacketEnum PacketType
         {
             get { return ClientPacketEnum.AuthenticationTicketMessage; }
         }

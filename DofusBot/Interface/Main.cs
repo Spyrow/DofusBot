@@ -163,7 +163,7 @@ namespace DofusBot.Interface
                     HelloGameMessage helloGame = (HelloGameMessage)e.Packet;
                     AuthenticationTicketMessage ATM = new AuthenticationTicketMessage("fr", _ticket.ToString());
                     _GameSocket.Send(ATM);
-                    Log(LogMessageType.Administrateurs, "[Client] " + ATM.GetType().ToString());
+                    Log(LogMessageType.Administrateurs, "[Client] " + ATM.PacketType);
                     break;
                 case ServerPacketEnum.RawDataMessage:
                     List<int> tt = new List<int>();
@@ -175,7 +175,7 @@ namespace DofusBot.Interface
                     }
                     CheckIntegrityMessage rawData = new CheckIntegrityMessage(tt);
                     _GameSocket.Send(rawData);
-                    Log(LogMessageType.Administrateurs, "[Client] " + rawData.GetType().ToString());
+                    Log(LogMessageType.Administrateurs, "[Client] " + rawData.PacketType);
                     break;
                 case ServerPacketEnum.HelloConnectMessage:
                     HelloConnectMessage helloConnectMessage = (HelloConnectMessage)e.Packet;
@@ -184,7 +184,7 @@ namespace DofusBot.Interface
                     IdentificationMessage idm = new IdentificationMessage(false, false, false, version, "fr", credentials, 0, 0, new ushort[0]);
                     Log(LogMessageType.Informations, "Identification en cours...");
                     _socket.Send(idm);
-                    Log(LogMessageType.Administrateurs, "[Client] " + idm.GetType().ToString());
+                    Log(LogMessageType.Administrateurs, "[Client] " + idm.PacketType);
                     break;
                 case ServerPacketEnum.LoginQueueStatusMessage:
                     LoginQueueStatusMessage loginQueueStatusMessage = (LoginQueueStatusMessage)e.Packet;
@@ -209,7 +209,7 @@ namespace DofusBot.Interface
                         {
                             ServerSelectionMessage SSM = new ServerSelectionMessage(i.ObjectID);
                             _socket.Send(SSM);
-                            Log(LogMessageType.Administrateurs, "[Client] " + SSM.GetType().ToString());
+                            Log(LogMessageType.Administrateurs, "[Client] " + SSM.PacketType);
                             break;
                         }
 

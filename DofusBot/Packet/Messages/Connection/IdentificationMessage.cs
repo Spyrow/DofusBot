@@ -6,7 +6,7 @@ namespace DofusBot.Packet.Messages.Connection
 {
     public class IdentificationMessage : NetworkMessage
     {
-        public ClientPacketEnum Type
+        public ClientPacketEnum PacketType
         {
             get { return ClientPacketEnum.IdentificationMessage; }
         }

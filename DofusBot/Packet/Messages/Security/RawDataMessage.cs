@@ -5,7 +5,7 @@ namespace DofusBot.Packet.Messages.Security
 {
     public class RawDataMessage : NetworkMessage
     {
-        public ServerPacketEnum Type
+        public ServerPacketEnum PacketType
         {
             get { return ServerPacketEnum.RawDataMessage; }
         }

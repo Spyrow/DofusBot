@@ -4,7 +4,7 @@ namespace DofusBot.Packet.Messages.Game.Approach
 {
     class HelloGameMessage : NetworkMessage
     {
-        public ServerPacketEnum Type
+        public ServerPacketEnum PacketType
         {
             get { return ServerPacketEnum.HelloGameMessage; }
         }

@@ -4,7 +4,7 @@ namespace DofusBot.Packet.Messages.Queues
 {
     public class LoginQueueStatusMessage : NetworkMessage
     {
-        public ServerPacketEnum Type
+        public ServerPacketEnum PacketType
         {
             get { return ServerPacketEnum.LoginQueueStatusMessage; }
         }

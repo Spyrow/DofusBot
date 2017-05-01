@@ -3,7 +3,6 @@
 
     public abstract class NetworkMessage
     {
-
         private const byte BIT_RIGHT_SHIFT_LEN_PACKET_ID = 2;
         private const byte BIT_MASK = 3;
 

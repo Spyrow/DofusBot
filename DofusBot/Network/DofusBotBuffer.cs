@@ -1,5 +1,4 @@
 ﻿using DofusBot.Core;
-using DofusBot.Packet.Messages.Security;
 using System;
 using System.Collections.Generic;
 

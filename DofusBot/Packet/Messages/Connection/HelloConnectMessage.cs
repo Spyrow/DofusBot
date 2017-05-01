@@ -4,7 +4,7 @@ namespace DofusBot.Packet.Messages.Connection
 {
     public class HelloConnectMessage : NetworkMessage
     {
-        public ServerPacketEnum Type
+        public ServerPacketEnum PacketType
         {
             get { return ServerPacketEnum.HelloConnectMessage; }
         }

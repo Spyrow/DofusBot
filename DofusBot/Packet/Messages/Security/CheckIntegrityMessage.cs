@@ -5,7 +5,7 @@ namespace DofusBot.Packet.Messages.Security
 {
     public class CheckIntegrityMessage : NetworkMessage
     {
-        public ClientPacketEnum Type
+        public ClientPacketEnum PacketType
         {
             get { return ClientPacketEnum.CheckIntegrityMessage; }
         }
