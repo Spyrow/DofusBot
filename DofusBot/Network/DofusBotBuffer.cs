@@ -1,4 +1,5 @@
 ﻿using DofusBot.Core;
+using DofusBot.Packet.Messages.Security;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +15,6 @@ namespace DofusBot.Network
         {
             ReceivePacketBuffer.Raise(this, e);
         }
-
 
         public void Enqueu(byte[] buffer)
         {
@@ -66,6 +66,7 @@ namespace DofusBot.Network
                 {
                     data[i] = _byteQueue.Dequeue(); // On le remplit
                 }
+
 
                 OnReceivePacketBuffer(new PacketBufferEventArg(packetId, data));
             }

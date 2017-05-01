@@ -14,14 +14,14 @@ namespace DofusBot.Packet.Messages.Connection
         public string Address;
         public ushort Port;
         public bool CanCreateNewCharacter = false;
-        public List<byte> Ticket;
+        public List<int> Ticket;
 
         public const uint ProtocolId = 42;
         public override uint MessageID { get { return ProtocolId; } }
 
         public SelectedServerDataMessage() { }
 
-        public SelectedServerDataMessage(ushort serverId, string address, ushort port, bool canCreateNewCharacter, List<byte> ticket)
+        public SelectedServerDataMessage(ushort serverId, string address, ushort port, bool canCreateNewCharacter, List<int> ticket)
         {
             ServerId = serverId;
             Address = address;
@@ -38,7 +38,7 @@ namespace DofusBot.Packet.Messages.Connection
             writer.WriteBoolean(CanCreateNewCharacter);
             for (int i = 0; i < Ticket.Count; i++)
             {
-                writer.WriteByte(Ticket[i]);
+                writer.WriteByte((byte)Ticket[i]);
             }
         }
 
@@ -49,7 +49,7 @@ namespace DofusBot.Packet.Messages.Connection
             Port = reader.ReadUShort();
             CanCreateNewCharacter = reader.ReadBoolean();
             int size = reader.ReadVarInt();
-            Ticket = new List<byte>();
+            Ticket = new List<int>();
             for (int i = 0; i < size; i++)
             {
                 Ticket.Add(reader.ReadByte());

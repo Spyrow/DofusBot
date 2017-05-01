@@ -8,3 +8,4 @@ C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.pdb
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\RSA.dll
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.exe
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\AES.dll

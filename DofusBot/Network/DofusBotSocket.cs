@@ -34,18 +34,25 @@ namespace DofusBot.Network
             {
                 receiverBuffer = new byte[500];
                 bufferSize = _socket.Receive(receiverBuffer);
-                if (bufferSize == 0)
-                    Environment.Exit(0);
+                /*if (bufferSize == 0)
+                    Environment.Exit(0);*/
                 buffer = new byte[bufferSize];
                 Array.Copy(receiverBuffer, 0, buffer, 0, bufferSize);
                 _buffer.Enqueu(buffer);
             }
+            
         }
 
         public void ConnectEndListen()
         {
             _socket.Connect(_endPoint);
             _listeningThread.Start();
+        }
+
+        public void CloseSocket()
+        {
+            _listeningThread.Abort();
+            _socket.Close();
         }
 
         public void Send(NetworkMessage packet)
