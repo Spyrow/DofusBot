@@ -1,6 +1,4 @@
 ﻿using DofusBot.Core.Network;
-using DofusBot.Core.Network.Utils;
-using DofusBot.Packet.Types.Connection;
 using System.Collections.Generic;
 
 namespace DofusBot.Packet.Messages.Connection
@@ -21,9 +19,7 @@ namespace DofusBot.Packet.Messages.Connection
         public const uint ProtocolId = 42;
         public override uint MessageID { get { return ProtocolId; } }
 
-        public SelectedServerDataMessage()
-        {
-        }
+        public SelectedServerDataMessage() { }
 
         public SelectedServerDataMessage(ushort serverId, string address, ushort port, bool canCreateNewCharacter, List<byte> ticket)
         {

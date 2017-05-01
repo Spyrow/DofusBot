@@ -12,7 +12,7 @@ namespace DofusBot.Packet.Messages.Connection
         }
 
         public List<GameServerInformations> Servers;
-        public uint AlreadyConnectedToServerId;
+        public ushort AlreadyConnectedToServerId;
         public bool CanCreateNewCharacter;
 
         public const uint ProtocolId = 30;
@@ -22,7 +22,7 @@ namespace DofusBot.Packet.Messages.Connection
         {
         }
 
-        public ServerListMessage(List<GameServerInformations> servers, uint alreadyConnectedToServerId, bool canCreateNewCharacter)
+        public ServerListMessage(List<GameServerInformations> servers, ushort alreadyConnectedToServerId, bool canCreateNewCharacter)
         {
             Servers = servers;
             AlreadyConnectedToServerId = alreadyConnectedToServerId;

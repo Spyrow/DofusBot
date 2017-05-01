@@ -54,7 +54,7 @@ namespace DofusBot.Network
         {
             BigEndianWriter bigEndianWriter = new BigEndianWriter();
             packet.Pack(bigEndianWriter);
-            this._socket.Send(bigEndianWriter.Data);
+            _socket.Send(bigEndianWriter.Data);
         }
 
     }

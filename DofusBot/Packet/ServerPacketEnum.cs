@@ -9,6 +9,9 @@
         IdentificationSuccessMessage = 22,
         ServerListMessage = 30,
         SelectedServerDataMessage = 42,
+        HelloGameMessage = 101,
+        RawDataMessage = 6253,
         CredentialsAcknowledgementMessage = 6314,
+        SelectedServerDataExtendedMessage = 6469,
     }
 }

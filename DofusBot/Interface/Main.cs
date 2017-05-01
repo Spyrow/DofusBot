@@ -1,19 +1,15 @@
 ﻿using DofusBot.Network;
 using DofusBot.Packet;
 using DofusBot.Packet.Messages.Connection;
+using DofusBot.Packet.Messages.Game.Approach;
 using DofusBot.Packet.Messages.Queues;
+using DofusBot.Packet.Messages.Security;
 using DofusBot.Packet.Types;
 using DofusBot.Packet.Types.Connection;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace DofusBot.Interface
@@ -107,29 +103,37 @@ namespace DofusBot.Interface
 
         private void ConnectionButton_Click(object sender, EventArgs e)
         {
-            if (accountNameTextBox.Text != "" && accountPasswdTextBox.Text != "")
+            if (string.IsNullOrWhiteSpace(accountNameTextBox.Text) && string.IsNullOrWhiteSpace(accountPasswdTextBox.Text))
+                Log(LogMessageType.Administrateurs, "You have to put your account informations above in order to connect...");
+            else
             {
                 _socket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse("213.248.126.40"), 5555));
                 _socket.ConnectEndListen();
-            }
-            else
-                Log(LogMessageType.Administrateurs, "You have to put your account informations above in order to connect...");
+            }                
         }
 
         public void OnReceivedNullPacket(object source, NullPacketEventArg e)
         {
-            Log(LogMessageType.Administrateurs, "Packet id: { " + e.PacketType + "} is not implemented");
+            Log(LogMessageType.Administrateurs, "Packet: [" + e.PacketType + "] is not implemented");
         }
 
         public void OnReceivedPacket(object source, PacketEventArg e)
         {
-            ServerPacketEnum packetType = (ServerPacketEnum) e.Packet.MessageID;
+            ServerPacketEnum packetType = (ServerPacketEnum)e.Packet.MessageID;
 
             switch (packetType)
             {
                 case ServerPacketEnum.ProtocolRequired:
                     break;
                 case ServerPacketEnum.CredentialsAcknowledgementMessage:
+                    break;
+                case ServerPacketEnum.HelloGameMessage:
+                    HelloGameMessage helloGame = (HelloGameMessage)e.Packet;
+                    Log(LogMessageType.Administrateurs, "HelloGameMessage");
+                    break;
+                case ServerPacketEnum.RawDataMessage:
+                    RawDataMessage rawData = (RawDataMessage)e.Packet;
+                    Log(LogMessageType.Administrateurs, rawData.Content.ToString());
                     break;
                 case ServerPacketEnum.HelloConnectMessage:
                     HelloConnectMessage helloConnectMessage = (HelloConnectMessage)e.Packet;
@@ -147,16 +151,16 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.IdentificationSuccessMessage:
                     IdentificationSuccessMessage idSuccess = (IdentificationSuccessMessage)e.Packet;
-                    Log(LogMessageType.Prive, "Bonjour " + idSuccess.Nickname + " !");
+                    Log(LogMessageType.Prive, "Hello " + idSuccess.Nickname + " !");
                     break;
                 case ServerPacketEnum.ServerListMessage:
                     ServerListMessage servers = (ServerListMessage)e.Packet;
-                    Log(LogMessageType.Kolizeum, "CanCreateNewCharacter: " + servers.CanCreateNewCharacter);
-                    Log(LogMessageType.Kolizeum, "AlreadyConnectedToServerId: " + servers.AlreadyConnectedToServerId);
+                    //Log(LogMessageType.Kolizeum, "CanCreateNewCharacter: " + servers.CanCreateNewCharacter);
+                    //Log(LogMessageType.Kolizeum, "AlreadyConnectedToServerId: " + servers.AlreadyConnectedToServerId);
 
                     if (servers.AlreadyConnectedToServerId != 0)
                     {
-                        ServerSelectionMessage serverSelection = new ServerSelectionMessage((ushort)servers.AlreadyConnectedToServerId);
+                        ServerSelectionMessage serverSelection = new ServerSelectionMessage(servers.AlreadyConnectedToServerId);
                         _socket.Send(serverSelection);
                         break;
                     }
@@ -165,7 +169,7 @@ namespace DofusBot.Interface
                     {
                         GameServerInformations serverInfos = servers.Servers[i];
 
-                        Log(LogMessageType.Kolizeum, "[Server] ID:" + serverInfos.ObjectID + " Status: " + serverInfos.Status + " IsSelectable: " + serverInfos.IsSelectable + " Completion: " + serverInfos.Completion + " | [" + serverInfos.CharactersCount + "/" + serverInfos.CharactersSlots + "] Characters.");
+                        //Log(LogMessageType.Kolizeum, "[Server] ID:" + serverInfos.ObjectID + " Status: " + serverInfos.Status + " IsSelectable: " + serverInfos.IsSelectable + " Completion: " + serverInfos.Completion + " | [" + serverInfos.CharactersCount + "/" + serverInfos.CharactersSlots + "] Characters.");
 
                         if (serverInfos.CharactersCount >= 1)
                         {
@@ -176,7 +180,7 @@ namespace DofusBot.Interface
                             }
                             else
                             {
-                                Log(LogMessageType.Administrateurs, "Wait, your server status is " + (ServerStatus) serverInfos.Status);
+                                Log(LogMessageType.Administrateurs, "Wait, your server status is " + (ServerStatus)serverInfos.Status);
                             }
                         }
                     }
@@ -184,6 +188,18 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.SelectedServerDataMessage:
                     SelectedServerDataMessage selected = (SelectedServerDataMessage)e.Packet;
                     Log(LogMessageType.Informations, "Connected to ServerID: " + selected.ServerId);
+                    AuthenticationTicketMessage authenticationTicket = new AuthenticationTicketMessage("fr", Encoding.UTF8.GetString(selected.Ticket.ToArray()));
+                    _socket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selected.Address), selected.Port));
+                    _socket.ConnectEndListen();
+                    _socket.Send(authenticationTicket);
+                    break;
+                case ServerPacketEnum.SelectedServerDataExtendedMessage:
+                    SelectedServerDataExtendedMessage selectedExtended = (SelectedServerDataExtendedMessage)e.Packet;
+                    Log(LogMessageType.Informations, "Connected to ServerID: " + selectedExtended.ServerId);
+                    AuthenticationTicketMessage authenticationTicket2 = new AuthenticationTicketMessage("fr", Encoding.UTF8.GetString(selectedExtended.Ticket.ToArray()));
+                    _socket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selectedExtended.Address), selectedExtended.Port));
+                    _socket.ConnectEndListen();
+                    _socket.Send(authenticationTicket2);
                     break;
                 default:
                     Log(LogMessageType.Administrateurs, "Packet id : {" + e.Packet.MessageID + "} is not treated.");

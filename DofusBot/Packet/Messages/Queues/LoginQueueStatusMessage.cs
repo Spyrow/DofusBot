@@ -12,15 +12,12 @@ namespace DofusBot.Packet.Messages.Queues
         public const uint ProtocolId = 10;
         public override uint MessageID { get { return ProtocolId; } }
 
-        public uint position;
-        public uint total;
+        public ushort position;
+        public ushort total;
 
-        public LoginQueueStatusMessage()
-        {
+        public LoginQueueStatusMessage() { }
 
-        }
-
-        public LoginQueueStatusMessage(uint position, uint total)
+        public LoginQueueStatusMessage(ushort position, ushort total)
         {
             this.position = position;
             this.total = total;

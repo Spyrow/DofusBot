@@ -24,21 +24,19 @@ namespace DofusBot.Packet.Messages.Connection
         public long SessionOptionalSalt { get; set; }
         public ushort[] FailedAttempts { get; set; }
 
-        public IdentificationMessage()
-        {
-        }
+        public IdentificationMessage() { }
 
         public IdentificationMessage(bool autoconnect, bool useCertificate, bool useLoginToken, Types.VersionExtended version, string lang, sbyte[] credentials, short serverId, long sessionOptionalSalt, ushort[] failedAttempts)
         {
-            this.Autoconnect = autoconnect;
-            this.UseCertificate = useCertificate;
-            this.UseLoginToken = useLoginToken;
-            this.Version = version;
-            this.Lang = lang;
-            this.Credentials = credentials;
-            this.ServerId = serverId;
-            this.SessionOptionalSalt = sessionOptionalSalt;
-            this.FailedAttempts = failedAttempts;
+            Autoconnect = autoconnect;
+            UseCertificate = useCertificate;
+            UseLoginToken = useLoginToken;
+            Version = version;
+            Lang = lang;
+            Credentials = credentials;
+            ServerId = serverId;
+            SessionOptionalSalt = sessionOptionalSalt;
+            FailedAttempts = failedAttempts;
         }
 
         public override void Serialize(IDataWriter writer)

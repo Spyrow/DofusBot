@@ -1,6 +1,5 @@
 ﻿using DofusBot.Interface;
 using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace DofusBot
@@ -15,7 +14,15 @@ namespace DofusBot
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Main main = new Main();
+            main.FormClosing += MainFormClosing;
+            Application.Run(main);
+            Console.WriteLine("I AM AT THE END OF THE MAIN");
+        }
+
+        public static void MainFormClosing(object source, FormClosingEventArgs e)
+        {
+            //
         }
     }
 }

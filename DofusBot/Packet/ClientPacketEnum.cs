@@ -4,5 +4,6 @@
     {
         IdentificationMessage = 4,
         ServerSelectionMessage = 40,
+        AuthenticationTicketMessage = 110,
     }
 }

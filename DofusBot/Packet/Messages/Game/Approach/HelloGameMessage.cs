@@ -1,18 +1,18 @@
 ﻿using DofusBot.Core.Network;
 
-namespace DofusBot.Packet.Messages.Connection
+namespace DofusBot.Packet.Messages.Game.Approach
 {
-    public class CredentialsAcknowledgementMessage : NetworkMessage
+    class HelloGameMessage : NetworkMessage
     {
         public ServerPacketEnum Type
         {
-            get { return ServerPacketEnum.CredentialsAcknowledgementMessage; }
+            get { return ServerPacketEnum.HelloGameMessage; }
         }
 
-        public const uint ProtocolId = 6314;
+        public const uint ProtocolId = 101;
         public override uint MessageID { get { return ProtocolId; } }
 
-        public CredentialsAcknowledgementMessage() { }
+        public HelloGameMessage() { }
 
         public override void Serialize(IDataWriter writer)
         {
