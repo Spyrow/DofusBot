@@ -12,6 +12,7 @@
         HelloGameMessage = 101,
         RawDataMessage = 6253,
         CredentialsAcknowledgementMessage = 6314,
+        BasicAckMessage = 6362,
         SelectedServerDataExtendedMessage = 6469,
     }
 }

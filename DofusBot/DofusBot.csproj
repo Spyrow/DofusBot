@@ -108,6 +108,7 @@
     <Compile Include="Packet\Messages\Connection\ServerSelectionMessage.cs" />
     <Compile Include="Packet\Messages\Game\Approach\AuthenticationTicketMessage.cs" />
     <Compile Include="Packet\Messages\Game\Approach\HelloGameMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Basic\BasicAckMessage.cs" />
     <Compile Include="Packet\Messages\Handshake\ProtocolRequired.cs" />
     <Compile Include="Packet\Messages\Queues\LoginQueueStatusMessage.cs" />
     <Compile Include="Packet\Messages\Security\CheckIntegrityMessage.cs" />

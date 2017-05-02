@@ -159,6 +159,8 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.CredentialsAcknowledgementMessage:
                     break;
+                case ServerPacketEnum.BasicAckMessage:
+                    break;
                 case ServerPacketEnum.HelloGameMessage:
                     HelloGameMessage helloGame = (HelloGameMessage)e.Packet;
                     AuthenticationTicketMessage ATM = new AuthenticationTicketMessage("fr", _ticket.ToString());
