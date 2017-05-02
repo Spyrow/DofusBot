@@ -32,8 +32,7 @@ namespace DofusBot.Packet.Messages.Connection
         public override void Serialize(IDataWriter writer)
         {
             writer.WriteShort(((short)(Servers.Count)));
-            int serversIndex;
-            for (serversIndex = 0; (serversIndex < Servers.Count); serversIndex = (serversIndex + 1))
+            for (int serversIndex = 0; (serversIndex < Servers.Count); serversIndex = (serversIndex + 1))
             {
                 GameServerInformations objectToSend = Servers[serversIndex];
                 objectToSend.Serialize(writer);

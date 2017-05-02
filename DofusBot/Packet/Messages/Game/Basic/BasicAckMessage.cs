@@ -1,10 +1,4 @@
 ﻿using DofusBot.Core.Network;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DofusBot.Packet.Messages.Game.Basic
 {
     class BasicAckMessage : NetworkMessage

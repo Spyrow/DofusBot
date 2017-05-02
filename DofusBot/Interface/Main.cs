@@ -1,15 +1,21 @@
-﻿using DofusBot.Network;
+﻿using DofusBot.Enums;
+using DofusBot.Network;
 using DofusBot.Packet;
 using DofusBot.Packet.Messages.Connection;
 using DofusBot.Packet.Messages.Game.Approach;
+using DofusBot.Packet.Messages.Game.Basic;
+using DofusBot.Packet.Messages.Game.Character.Choice;
 using DofusBot.Packet.Messages.Queues;
+using DofusBot.Packet.Messages.Secure;
 using DofusBot.Packet.Messages.Security;
 using DofusBot.Packet.Types;
 using DofusBot.Packet.Types.Connection;
+using DofusBot.Packet.Types.Game.Character.Choice;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Net;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace DofusBot.Interface
@@ -34,11 +40,6 @@ namespace DofusBot.Interface
         public enum LogMessageType
         {
             General, Equipe, Guilde, Alliance, Groupe, Commerce, Recrutement, Debutants, Administrateurs, Prive, Informations, Promotion, Kolizeum
-        }
-
-        public enum ServerStatus: byte
-        {
-            Inconnu, HorsLigne, EnCoursDeDémarrage, EnLigne, Inaccessible, EnCoursDeSauvegarde, EnCoursDExtinction, Complet
         }
 
         private void Log(LogMessageType type, string Text)
@@ -161,7 +162,12 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.BasicAckMessage:
                     break;
+                case ServerPacketEnum.TextInformationMessage:
+                    TextInformationMessage text = (TextInformationMessage)e.Packet;
+                    Log(LogMessageType.Kolizeum, ((TextInformationTypeEnum)text.MsgType).ToString() + "ID = " + text.MsgId + " Parameters = " + text.Parameters.ToString());
+                    break;
                 case ServerPacketEnum.HelloGameMessage:
+                    Log(LogMessageType.Informations, "Connecté au serveur de jeu.");
                     HelloGameMessage helloGame = (HelloGameMessage)e.Packet;
                     AuthenticationTicketMessage ATM = new AuthenticationTicketMessage("fr", _ticket.ToString());
                     _GameSocket.Send(ATM);
@@ -180,11 +186,12 @@ namespace DofusBot.Interface
                     Log(LogMessageType.Administrateurs, "[Client] " + rawData.PacketType);
                     break;
                 case ServerPacketEnum.HelloConnectMessage:
+                    Log(LogMessageType.Informations, "Connecté au serveur d'authentification.");
                     HelloConnectMessage helloConnectMessage = (HelloConnectMessage)e.Packet;
                     sbyte[] credentials = RSA.RSAKey.Encrypt(helloConnectMessage.key, accountNameTextBox.Text, accountPasswdTextBox.Text, helloConnectMessage.salt);
-                    VersionExtended version = new VersionExtended(2, 41, 1, 120264, 3, 0, 1, 1);
+                    VersionExtended version = new VersionExtended(2, 41, 1, 120278, 1, 0, 1, 1);
                     IdentificationMessage idm = new IdentificationMessage(false, false, false, version, "fr", credentials, 0, 0, new ushort[0]);
-                    Log(LogMessageType.Informations, "Identification en cours...");
+                    Log(LogMessageType.Informations, "Envois des informations d'identification...");
                     _ServerSocket.Send(idm);
                     Log(LogMessageType.Administrateurs, "[Client] " + idm.PacketType);
                     break;
@@ -192,6 +199,11 @@ namespace DofusBot.Interface
                     LoginQueueStatusMessage loginQueueStatusMessage = (LoginQueueStatusMessage)e.Packet;
                     if (loginQueueStatusMessage.Position != 0 && loginQueueStatusMessage.Total != 0)
                         Log(LogMessageType.Informations, "Vous êtes en position " + loginQueueStatusMessage.Position + " sur " + loginQueueStatusMessage.Total + " dans la file d'attente.");
+                    break;
+                case ServerPacketEnum.QueueStatusMessage:
+                    QueueStatusMessage queueStatusMessage = (QueueStatusMessage)e.Packet;
+                    if (queueStatusMessage.Position != 0 && queueStatusMessage.Total != 0)
+                        Log(LogMessageType.Informations, "Vous êtes en position " + queueStatusMessage.Position + " sur " + queueStatusMessage.Total + " dans la file d'attente.");
                     break;
                 case ServerPacketEnum.IdentificationFailedMessage:
                     Log(LogMessageType.Promotion, "Identification échouée ! Veuillez recommencer.");
@@ -212,22 +224,21 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.ServerListMessage:
                     ServerListMessage servers = (ServerListMessage)e.Packet;
                     foreach(GameServerInformations i in servers.Servers ){
-                        if (i.CharactersCount > 0 && i.IsSelectable && (ServerStatus)i.Status == ServerStatus.EnLigne)
+                        if (i.CharactersCount > 0 && i.IsSelectable && (ServerStatusEnum)i.Status == ServerStatusEnum.ONLINE)
                         {
                             ServerSelectionMessage SSM = new ServerSelectionMessage(i.ObjectID);
                             _ServerSocket.Send(SSM);
                             Log(LogMessageType.Administrateurs, "[Client] " + SSM.PacketType);
                             break;
                         }
-
                     }
-
                     break;
                 case ServerPacketEnum.SelectedServerDataMessage:
                     SelectedServerDataMessage selected = (SelectedServerDataMessage)e.Packet;
-                    Log(LogMessageType.Informations, "Connecté au serveur : " + selected.ServerId);     
+                    Log(LogMessageType.Informations, "Connexion au serveur " + selected.ServerId + "...");     
                     _ticket = AES.AES.TicketTrans(selected.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selected.Address), selected.Port));
+                    Log(LogMessageType.Informations, "Connexion en cours <" + selected.Address + ":" + selected.Port + ">");
                     _GameSocket.ConnectEndListen();
                     _ServerSocket.CloseSocket();
                     _ServerSocket = null;
@@ -237,12 +248,60 @@ namespace DofusBot.Interface
                     Log(LogMessageType.Informations, "Connecté au serveur : " + selectedExtended.ServerId);
                     _ticket = AES.AES.TicketTrans(selectedExtended.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selectedExtended.Address), selectedExtended.Port));
+                    Log(LogMessageType.Informations, "Connexion en cours <" + selectedExtended.Address + ":" + selectedExtended.Port + ">");
                     _GameSocket.ConnectEndListen();
                     _ServerSocket.CloseSocket();
                     _ServerSocket = null;
                     break;
+                case ServerPacketEnum.AuthenticationTicketAcceptedMessage:
+                    AuthenticationTicketAcceptedMessage accepted = (AuthenticationTicketAcceptedMessage)e.Packet;
+                    Thread.Sleep(500);
+                    CharactersListRequestMessage charactersListRequest = new CharactersListRequestMessage();
+                    _GameSocket.Send(charactersListRequest);
+                    Log(LogMessageType.Administrateurs, "[Client] " + charactersListRequest.PacketType);
+                    break;
+                case ServerPacketEnum.AuthenticationTicketRefusedMessage:
+                    AuthenticationTicketRefusedMessage refused = (AuthenticationTicketRefusedMessage)e.Packet;
+                    break;
+                case ServerPacketEnum.BasicTimeMessage:
+                    BasicTimeMessage time = (BasicTimeMessage)e.Packet;
+                    break;
+                case ServerPacketEnum.ServerSettingsMessage:
+                    ServerSettingsMessage serverSettings = (ServerSettingsMessage)e.Packet;
+                    break;
+                case ServerPacketEnum.ServerOptionalFeaturesMessage:
+                    ServerOptionalFeaturesMessage serverFeatures = (ServerOptionalFeaturesMessage)e.Packet;
+                    break;
+                case ServerPacketEnum.ServerSessionConstantsMessage:
+                    ServerSessionConstantsMessage serverSession = (ServerSessionConstantsMessage)e.Packet;
+                    break;
+                case ServerPacketEnum.AccountCapabilitiesMessage:
+                    AccountCapabilitiesMessage accountCapabilities = (AccountCapabilitiesMessage)e.Packet;
+                    Log(LogMessageType.Kolizeum, "ID Compte = " + accountCapabilities.AccountId + " | Status = " + accountCapabilities.Status);
+                    break;
+                case ServerPacketEnum.TrustStatusMessage:
+                    TrustStatusMessage trust = (TrustStatusMessage)e.Packet;
+                    Log(LogMessageType.Kolizeum, "Certifié = " + trust.Certified + " | Confiance = " + trust.Trusted);
+                    break;
+                case ServerPacketEnum.CharactersListMessage:
+                    CharactersListMessage charactersList = (CharactersListMessage)e.Packet;
+                    List<CharacterBaseInformations> characters = charactersList.Characters;
+                    for (int i = 0; i < characters.Count; i++)
+                    {
+                        CharacterBaseInformations c = characters[i];
+
+                        Log(LogMessageType.Kolizeum, "Perso: " + c.Name + " | Level: " + c.Level + " | Classe: " + (BreedEnum)c.Breed + " | Sexe: " + c.Sex);
+
+                        if (c.Level != 0)
+                        {
+                            CharacterSelectionMessage select = new CharacterSelectionMessage((ulong)c.ObjectID);
+                            _GameSocket.Send(select);
+                            Log(LogMessageType.Administrateurs, "[Client] " + select.PacketType);
+                        }
+                    }
+                    break;
                 default:
-                    Log(LogMessageType.Administrateurs, "Packet: [" + e.Packet.MessageID + "] is not treated.");
+                    Log(LogMessageType.Administrateurs, "Packet: [" + (ServerPacketEnum)e.Packet.MessageID + "] is not handled.");
                     break;
             }
         }
@@ -270,6 +329,11 @@ namespace DofusBot.Interface
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            //
         }
     }
 }

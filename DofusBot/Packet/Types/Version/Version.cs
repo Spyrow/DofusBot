@@ -19,9 +19,7 @@ namespace DofusBot.Packet.Types
         public sbyte Patch { get; set; }
         public sbyte BuildType { get; set; }
 
-        public Version()
-        {
-        }
+        public Version() { }
 
         public Version(sbyte major, sbyte minor, sbyte release, int revision, sbyte patch, sbyte buildType)
         {

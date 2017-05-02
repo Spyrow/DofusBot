@@ -71,6 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\BreedEnum.cs" />
+    <Compile Include="Enums\ServerStatusEnum.cs" />
+    <Compile Include="Enums\TextInformationTypeEnum.cs" />
     <Compile Include="Misc\EventHandlerExtensions.cs" />
     <Compile Include="Core\Network\NetworkMessage.cs" />
     <Compile Include="Core\Network\Utils\BooleanByteWrapper.cs" />
@@ -106,16 +109,45 @@
     <Compile Include="Packet\Messages\Connection\SelectedServerDataMessage.cs" />
     <Compile Include="Packet\Messages\Connection\ServerListMessage.cs" />
     <Compile Include="Packet\Messages\Connection\ServerSelectionMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Approach\AccountCapabilitiesMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Approach\AuthenticationTicketAcceptedMessage.cs" />
     <Compile Include="Packet\Messages\Game\Approach\AuthenticationTicketMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Approach\AuthenticationTicketRefusedMessage.cs" />
     <Compile Include="Packet\Messages\Game\Approach\HelloGameMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Approach\ServerOptionalFeaturesMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Approach\ServerSessionConstantsMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Approach\ServerSettingsMessage.cs" />
     <Compile Include="Packet\Messages\Game\Basic\BasicAckMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Basic\BasicTimeMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Basic\TextInformationMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Character\Choice\BasicCharactersListMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Character\Choice\CharacterSelectionMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Character\Choice\CharactersListMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Character\Choice\CharactersListRequestMessage.cs" />
     <Compile Include="Packet\Messages\Handshake\ProtocolRequired.cs" />
     <Compile Include="Packet\Messages\Queues\LoginQueueStatusMessage.cs" />
+    <Compile Include="Packet\Messages\Queues\QueueStatusMessage.cs" />
+    <Compile Include="Packet\Messages\Secure\TrustStatusMessage.cs" />
     <Compile Include="Packet\Messages\Security\CheckIntegrityMessage.cs" />
     <Compile Include="Packet\Messages\Security\RawDataMessage.cs" />
+    <Compile Include="Packet\ProtocolTypeManager.cs" />
     <Compile Include="Packet\ServerPacketEnum.cs" />
     <Compile Include="Packet\TypeEnum.cs" />
     <Compile Include="Packet\Types\Connection\GameServerInformations.cs" />
+    <Compile Include="Packet\Types\Game\Approach\ServerSessionConstant.cs" />
+    <Compile Include="Packet\Types\Game\Character\AbstractCharacterInformation.cs" />
+    <Compile Include="Packet\Types\Game\Character\CharacterBasicMinimalInformations.cs" />
+    <Compile Include="Packet\Types\Game\Character\CharacterMinimalAllianceInformations.cs" />
+    <Compile Include="Packet\Types\Game\Character\CharacterMinimalGuildInformations.cs" />
+    <Compile Include="Packet\Types\Game\Character\CharacterMinimalInformations.cs" />
+    <Compile Include="Packet\Types\Game\Character\CharacterMinimalPlusLookAndGradeInformations.cs" />
+    <Compile Include="Packet\Types\Game\Character\CharacterMinimalPlusLookInformations.cs" />
+    <Compile Include="Packet\Types\Game\Character\Choice\CharacterBaseInformations.cs" />
+    <Compile Include="Packet\Types\Game\Context\Roleplay\BasicAllianceInformations.cs" />
+    <Compile Include="Packet\Types\Game\Context\Roleplay\BasicGuildInformations.cs" />
+    <Compile Include="Packet\Types\Game\Look\EntityLook.cs" />
+    <Compile Include="Packet\Types\Game\Look\SubEntity.cs" />
+    <Compile Include="Packet\Types\Game\Social\AbstractSocialGroupInfos.cs" />
     <Compile Include="Packet\Types\Version\Version.cs" />
     <Compile Include="Packet\Types\Version\VersionExtended.cs" />
     <Compile Include="Program.cs" />
@@ -160,5 +192,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

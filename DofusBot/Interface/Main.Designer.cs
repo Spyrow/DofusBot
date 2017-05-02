@@ -55,6 +55,7 @@
             this.accountNameTextBox.Name = "accountNameTextBox";
             this.accountNameTextBox.Size = new System.Drawing.Size(207, 21);
             this.accountNameTextBox.TabIndex = 2;
+            this.accountNameTextBox.Text = "-atomiks-";
             // 
             // accountPasswdTextBox
             // 
@@ -63,6 +64,7 @@
             this.accountPasswdTextBox.PasswordChar = '*';
             this.accountPasswdTextBox.Size = new System.Drawing.Size(207, 21);
             this.accountPasswdTextBox.TabIndex = 3;
+            this.accountPasswdTextBox.Text = "Ad2js9cr4!!";
             // 
             // connectionButton
             // 
@@ -128,6 +130,7 @@
             this.Name = "Main";
             this.Text = "DofusBot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
+            this.Load += new System.EventHandler(this.Main_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

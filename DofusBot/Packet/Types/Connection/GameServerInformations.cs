@@ -19,9 +19,7 @@
         public byte CharactersSlots { get; set; }
         public double Date { get; set; }
 
-        public GameServerInformations()
-        {
-        }
+        public GameServerInformations() { }
 
         public GameServerInformations(ushort objectId, byte serverType, byte status, byte completion, bool isSelectable, byte charactersCount, byte charactersSlots, double date)
         {

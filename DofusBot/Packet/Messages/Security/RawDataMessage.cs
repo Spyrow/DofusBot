@@ -15,9 +15,7 @@ namespace DofusBot.Packet.Messages.Security
 
         public byte[] Content;
 
-        public RawDataMessage()
-        {
-        }
+        public RawDataMessage() { }
 
         public RawDataMessage(byte[] content)
         {

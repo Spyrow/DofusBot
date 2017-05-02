@@ -42,14 +42,14 @@ namespace DofusBot.Network
                 if (_byteQueue.Count < 2 + lenghtSize) // Si on ne peu pas lire la taille du packet, on quitte la méthode
                     return;
 
-                short lenght; // On récupère la taille du packet
+                int lenght; // On récupère la taille du packet
 
                 switch (lenghtSize)
                 {
                     case 0: lenght = 0; break;
                     case 1: lenght = temp.ReadByte(); break;
-                    case 2: lenght = temp.ReadShort(); break;
-                    case 3: lenght = (short)((((temp.ReadByte() & 255) << 16) + ((temp.ReadByte() & 255) << 8) + (temp.ReadByte() & 255))); break;
+                    case 2: lenght = temp.ReadUShort(); break;
+                    case 3: lenght = (temp.ReadByte() << 16) + (temp.ReadByte() << 8) + temp.ReadByte(); break;
                     default:
                         throw new Exception("Unknow lenght");
                 }
@@ -65,7 +65,6 @@ namespace DofusBot.Network
                 {
                     data[i] = _byteQueue.Dequeue(); // On le remplit
                 }
-
 
                 OnReceivePacketBuffer(new PacketBufferEventArg(packetId, data));
             }
