@@ -108,10 +108,10 @@ namespace DofusBot.Interface
             string Connect = "Connexion";
             string Disconnect = "Deconnexion";
 
-            logTextBox.Text = "";
-
             Invoke((MethodInvoker)delegate
             {
+                logTextBox.Text = "";
+
                 if (connectionButton.Text == Connect)
                 {
                     if (string.IsNullOrWhiteSpace(accountNameTextBox.Text) || string.IsNullOrWhiteSpace(accountPasswdTextBox.Text))
@@ -180,7 +180,7 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.HelloConnectMessage:
                     HelloConnectMessage helloConnectMessage = (HelloConnectMessage)e.Packet;
                     sbyte[] credentials = RSA.RSAKey.Encrypt(helloConnectMessage.key, accountNameTextBox.Text, accountPasswdTextBox.Text, helloConnectMessage.salt);
-                    VersionExtended version = new VersionExtended(2, 41, 1, 120116, 1, 0, 1, 1);
+                    VersionExtended version = new VersionExtended(2, 41, 1, 120264, 3, 0, 1, 1);
                     IdentificationMessage idm = new IdentificationMessage(false, false, false, version, "fr", credentials, 0, 0, new ushort[0]);
                     Log(LogMessageType.Informations, "Identification en cours...");
                     _ServerSocket.Send(idm);
@@ -223,21 +223,21 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.SelectedServerDataMessage:
                     SelectedServerDataMessage selected = (SelectedServerDataMessage)e.Packet;
-                    Log(LogMessageType.Informations, "Connecté au serveur : " + selected.ServerId);
-                    _ServerSocket.CloseSocket();
-                    _ServerSocket = null;
+                    Log(LogMessageType.Informations, "Connecté au serveur : " + selected.ServerId);     
                     _ticket = AES.AES.TicketTrans(selected.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selected.Address), selected.Port));
                     _GameSocket.ConnectEndListen();
+                    _ServerSocket.CloseSocket();
+                    _ServerSocket = null;
                     break;
                 case ServerPacketEnum.SelectedServerDataExtendedMessage:
                     SelectedServerDataExtendedMessage selectedExtended = (SelectedServerDataExtendedMessage)e.Packet;
                     Log(LogMessageType.Informations, "Connecté au serveur : " + selectedExtended.ServerId);
-                    _ServerSocket.CloseSocket();
-                    _ServerSocket = null;
                     _ticket = AES.AES.TicketTrans(selectedExtended.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selectedExtended.Address), selectedExtended.Port));
                     _GameSocket.ConnectEndListen();
+                    _ServerSocket.CloseSocket();
+                    _ServerSocket = null;
                     break;
                 default:
                     Log(LogMessageType.Administrateurs, "Packet: [" + e.Packet.MessageID + "] is not treated.");
