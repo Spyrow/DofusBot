@@ -1,4 +1,5 @@
 ﻿using DofusBot.Enums;
+using DofusBot.Misc;
 using DofusBot.Network;
 using DofusBot.Packet;
 using DofusBot.Packet.Messages.Connection;
@@ -35,11 +36,6 @@ namespace DofusBot.Interface
             _deserializer.ReceiveNullPacket += OnReceivedNullPacket;
 
             logTextBox.Font = new Font("Verdana", 8, FontStyle.Regular);
-        }
-
-        public enum LogMessageType
-        {
-            General, Equipe, Guilde, Alliance, Groupe, Commerce, Recrutement, Debutants, Administrateurs, Prive, Informations, Promotion, Kolizeum
         }
 
         private void Log(LogMessageType type, string Text)
@@ -101,7 +97,7 @@ namespace DofusBot.Interface
                 logTextBox.Select(logTextBox.Text.Length, 0);
                 logTextBox.ScrollToCaret();
             };
-            this.Invoke(log_callback);
+            Invoke(log_callback);
         }
 
         private void ConnectionButton_Click(object sender, EventArgs e)
@@ -164,7 +160,12 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.TextInformationMessage:
                     TextInformationMessage text = (TextInformationMessage)e.Packet;
-                    Log(LogMessageType.Kolizeum, ((TextInformationTypeEnum)text.MsgType).ToString() + "ID = " + text.MsgId + " Parameters = " + text.Parameters.ToString());
+                    Log(LogMessageType.Kolizeum, ((TextInformationTypeEnum)text.MsgType).ToString() + "ID = " + text.MsgId);
+                    for (int i = 0; i < text.Parameters.Count; i++)
+                    {
+                        string t = text.Parameters[i];
+                        Log(LogMessageType.Kolizeum, "Parameter[" + i + "] " + t);
+                    }
                     break;
                 case ServerPacketEnum.HelloGameMessage:
                     Log(LogMessageType.Informations, "Connecté au serveur de jeu.");
@@ -297,6 +298,7 @@ namespace DofusBot.Interface
                             CharacterSelectionMessage select = new CharacterSelectionMessage((ulong)c.ObjectID);
                             _GameSocket.Send(select);
                             Log(LogMessageType.Administrateurs, "[Client] " + select.PacketType);
+                            break;
                         }
                     }
                     break;

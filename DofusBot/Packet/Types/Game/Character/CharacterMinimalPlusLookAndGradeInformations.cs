@@ -8,7 +8,7 @@
         }
 
         public new const short ProtocolId = 193;
-        public new virtual short TypeID { get { return ProtocolId; } }
+        public override short TypeID { get { return ProtocolId; } }
 
         public uint Grade { get; set; }
 

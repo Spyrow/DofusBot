@@ -38,13 +38,12 @@ namespace DofusBot.Packet.Messages.Game.Character.Choice
 
         public override void Deserialize(IDataReader reader)
         {
-            uint _loc4_ = 0;
             int charactersCount = reader.ReadUShort();
             Characters = new List<CharacterBaseInformations>();
             for (int i = 0; i < charactersCount; i++)
             {
-                _loc4_ = reader.ReadByte();
-                CharacterBaseInformations objectToAdd = (CharacterBaseInformations)ProtocolTypeManager.GetInstance(reader.ReadUShort());
+                ushort packetId = reader.ReadUShort();
+                CharacterBaseInformations objectToAdd = Singleton<CharacterBaseInformations>.Instance;
                 objectToAdd.Deserialize(reader);
                 Characters.Add(objectToAdd);
             }

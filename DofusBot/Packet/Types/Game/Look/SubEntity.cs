@@ -2,7 +2,7 @@
 
 namespace DofusBot.Packet.Types.Game.Look
 {
-    public class SubEntity
+    public class SubEntity : NetworkType
     {
         public TypeEnum Type
         {
@@ -10,7 +10,7 @@ namespace DofusBot.Packet.Types.Game.Look
         }
 
         public const short ProtocolId = 54;
-        public virtual short TypeID { get { return ProtocolId; } }
+        public override short TypeID { get { return ProtocolId; } }
 
         public byte BindingPointCategory;
         public byte BindingPointIndex;
@@ -25,14 +25,14 @@ namespace DofusBot.Packet.Types.Game.Look
             SubEntityLook = subEntityLook;
         }
 
-        public virtual void Serialize(IDataWriter writer)
+        public override void Serialize(IDataWriter writer)
         {
             writer.WriteByte(BindingPointCategory);
             writer.WriteByte(BindingPointIndex);
             SubEntityLook.Serialize(writer);
         }
 
-        public virtual void Deserialize(IDataReader reader)
+        public override void Deserialize(IDataReader reader)
         {
             BindingPointCategory = reader.ReadByte();
             BindingPointIndex = reader.ReadByte();

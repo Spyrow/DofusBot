@@ -10,7 +10,7 @@ namespace DofusBot.Packet.Types.Game.Character
         }
 
         public new const short ProtocolId = 445;
-        public new virtual short TypeID { get { return ProtocolId; } }
+        public override short TypeID { get { return ProtocolId; } }
 
         public BasicGuildInformations Guild { get; set; }
 

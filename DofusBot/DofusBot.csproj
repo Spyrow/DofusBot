@@ -83,6 +83,7 @@
     <Compile Include="Interface\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Misc\LogMessageType.cs" />
     <Compile Include="Network\DofusBotBuffer.cs" />
     <Compile Include="Network\DofusBotPacketDeserializer.cs" />
     <Compile Include="Network\DofusBotSocket.cs" />
@@ -130,8 +131,8 @@
     <Compile Include="Packet\Messages\Secure\TrustStatusMessage.cs" />
     <Compile Include="Packet\Messages\Security\CheckIntegrityMessage.cs" />
     <Compile Include="Packet\Messages\Security\RawDataMessage.cs" />
-    <Compile Include="Packet\ProtocolTypeManager.cs" />
     <Compile Include="Packet\ServerPacketEnum.cs" />
+    <Compile Include="Packet\Singleton.cs" />
     <Compile Include="Packet\TypeEnum.cs" />
     <Compile Include="Packet\Types\Connection\GameServerInformations.cs" />
     <Compile Include="Packet\Types\Game\Approach\ServerSessionConstant.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Packet\Types\Game\Look\EntityLook.cs" />
     <Compile Include="Packet\Types\Game\Look\SubEntity.cs" />
     <Compile Include="Packet\Types\Game\Social\AbstractSocialGroupInfos.cs" />
+    <Compile Include="Packet\Types\NetworkType.cs" />
     <Compile Include="Packet\Types\Version\Version.cs" />
     <Compile Include="Packet\Types\Version\VersionExtended.cs" />
     <Compile Include="Program.cs" />

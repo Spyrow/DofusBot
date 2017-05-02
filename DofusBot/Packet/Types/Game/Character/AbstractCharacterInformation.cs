@@ -1,6 +1,6 @@
 ﻿namespace DofusBot.Packet.Types.Game.Character
 {
-    public class AbstractCharacterInformation
+    public class AbstractCharacterInformation : NetworkType
     {
         public TypeEnum Type
         {
@@ -8,7 +8,7 @@
         }
 
         public const short ProtocolId = 400;
-        public virtual short TypeID { get { return ProtocolId; } }
+        public override short TypeID { get { return ProtocolId; } }
 
         public double ObjectID { get; set; }
 
@@ -19,12 +19,12 @@
             ObjectID = objectId;
         }
 
-        public virtual void Serialize(IDataWriter writer)
+        public override void Serialize(IDataWriter writer)
         {
             writer.WriteVarLong((long)ObjectID);
         }
 
-        public virtual void Deserialize(IDataReader reader)
+        public override void Deserialize(IDataReader reader)
         {
             ObjectID = reader.ReadVarUhLong();
         }

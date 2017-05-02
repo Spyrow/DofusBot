@@ -7,8 +7,8 @@
             get { return TypeEnum.CharacterBasicMinimalInformations; }
         }
 
-        public new const short ProtocolId = 503;
-        public new virtual short TypeID { get { return ProtocolId; } }
+        public const short ProtocolId = 503;
+        public override short TypeID { get { return ProtocolId; } }
 
         public string Name { get; set; }
 

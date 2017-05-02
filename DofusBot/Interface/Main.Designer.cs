@@ -55,7 +55,6 @@
             this.accountNameTextBox.Name = "accountNameTextBox";
             this.accountNameTextBox.Size = new System.Drawing.Size(207, 21);
             this.accountNameTextBox.TabIndex = 2;
-            this.accountNameTextBox.Text = "-atomiks-";
             // 
             // accountPasswdTextBox
             // 
@@ -64,7 +63,6 @@
             this.accountPasswdTextBox.PasswordChar = '*';
             this.accountPasswdTextBox.Size = new System.Drawing.Size(207, 21);
             this.accountPasswdTextBox.TabIndex = 3;
-            this.accountPasswdTextBox.Text = "Ad2js9cr4!!";
             // 
             // connectionButton
             // 

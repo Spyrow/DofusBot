@@ -1,6 +1,8 @@
-﻿namespace DofusBot.Packet.Types.Connection
+﻿using System;
+
+namespace DofusBot.Packet.Types.Connection
 {
-    public class GameServerInformations
+    public class GameServerInformations : NetworkType
     {
         public TypeEnum Type
         {
@@ -8,7 +10,7 @@
         }
 
         public const short ProtocolId = 25;
-        public virtual short TypeID { get { return ProtocolId; } }
+        public override short TypeID { get { return ProtocolId; } }
 
         public ushort ObjectID { get; set; }
         public byte ServerType { get; set; }
@@ -33,7 +35,7 @@
             Date = date;
         }
 
-        public virtual void Serialize(IDataWriter writer)
+        public override void Serialize(IDataWriter writer)
         {
             writer.WriteVarShort(ObjectID);
             writer.WriteByte(ServerType);
@@ -45,7 +47,7 @@
             writer.WriteDouble(Date);
         }
 
-        public virtual void Deserialize(IDataReader reader)
+        public override void Deserialize(IDataReader reader)
         {
             ObjectID = reader.ReadVarUhShort();
             ServerType = reader.ReadByte();

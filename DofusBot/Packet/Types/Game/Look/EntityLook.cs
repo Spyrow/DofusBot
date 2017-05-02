@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DofusBot.Packet.Types.Game.Look
 {
-    public class EntityLook
+    public class EntityLook : NetworkType
     {
         public TypeEnum Type
         {
@@ -11,7 +11,7 @@ namespace DofusBot.Packet.Types.Game.Look
         }
 
         public const short ProtocolId = 55;
-        public virtual short TypeID { get { return ProtocolId; } }
+        public override short TypeID { get { return ProtocolId; } }
 
         public ushort BonesId { get; set; }
         public List<UInt16> Skins { get; set; }
@@ -30,7 +30,7 @@ namespace DofusBot.Packet.Types.Game.Look
             SubEntities = subEntities;
         }
 
-        public virtual void Serialize(IDataWriter writer)
+        public override void Serialize(IDataWriter writer)
         {
             writer.WriteVarShort(BonesId);
             writer.WriteShort(((short)(Skins.Count)));
@@ -56,7 +56,7 @@ namespace DofusBot.Packet.Types.Game.Look
             }
         }
 
-        public virtual void Deserialize(IDataReader reader)
+        public override void Deserialize(IDataReader reader)
         {
             BonesId = reader.ReadVarUhShort();
             ushort skinsLength = reader.ReadUShort();
