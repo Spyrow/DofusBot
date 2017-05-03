@@ -30,7 +30,7 @@ namespace DofusBot.Packet.Types.Game.Character
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            EntityLook = new EntityLook(); // ici
+            EntityLook = new EntityLook();
             EntityLook.Deserialize(reader);
         }
     }

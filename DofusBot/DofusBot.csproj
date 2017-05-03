@@ -55,6 +55,7 @@
     <Reference Include="AES">
       <HintPath>..\AES.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="RSA">
       <HintPath>..\RSA.dll</HintPath>
     </Reference>
@@ -71,7 +72,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\FlashKey.cs" />
     <Compile Include="Enums\BreedEnum.cs" />
+    <Compile Include="Enums\BuildTypeEnum.cs" />
+    <Compile Include="Enums\IdentificationFailureReasonEnum.cs" />
     <Compile Include="Enums\ServerStatusEnum.cs" />
     <Compile Include="Enums\TextInformationTypeEnum.cs" />
     <Compile Include="Misc\EventHandlerExtensions.cs" />
@@ -125,14 +129,24 @@
     <Compile Include="Packet\Messages\Game\Character\Choice\CharacterSelectionMessage.cs" />
     <Compile Include="Packet\Messages\Game\Character\Choice\CharactersListMessage.cs" />
     <Compile Include="Packet\Messages\Game\Character\Choice\CharactersListRequestMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Chat\Channel\ChannelEnablingMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Context\GameContextCreateRequestMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Context\Roleplay\CurrentMapMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Context\Roleplay\MapInformationsRequestMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Friend\FriendsGetListMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Friend\IgnoredGetListMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Friend\SpouseGetInformationsMessage.cs" />
+    <Compile Include="Packet\Messages\Game\Initialization\CharacterLoadingCompleteMessage.cs" />
     <Compile Include="Packet\Messages\Handshake\ProtocolRequired.cs" />
     <Compile Include="Packet\Messages\Queues\LoginQueueStatusMessage.cs" />
     <Compile Include="Packet\Messages\Queues\QueueStatusMessage.cs" />
     <Compile Include="Packet\Messages\Secure\TrustStatusMessage.cs" />
     <Compile Include="Packet\Messages\Security\CheckIntegrityMessage.cs" />
+    <Compile Include="Packet\Messages\Security\ClientKeyMessage.cs" />
     <Compile Include="Packet\Messages\Security\RawDataMessage.cs" />
+    <Compile Include="Packet\ProtocolConstantsEnum.cs" />
     <Compile Include="Packet\ServerPacketEnum.cs" />
-    <Compile Include="Packet\Singleton.cs" />
+    <Compile Include="Misc\Singleton.cs" />
     <Compile Include="Packet\TypeEnum.cs" />
     <Compile Include="Packet\Types\Connection\GameServerInformations.cs" />
     <Compile Include="Packet\Types\Game\Approach\ServerSessionConstant.cs" />
@@ -194,6 +208,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Packet\Messages\Game\Context\Notification\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

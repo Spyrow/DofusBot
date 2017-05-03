@@ -13,7 +13,7 @@ namespace DofusBot.Packet.Messages.Security
         public const uint ProtocolId = 6253;
         public override uint MessageID { get { return ProtocolId; } }
 
-        public byte[] Content;
+        public byte[] Content { get; set; }
 
         public RawDataMessage() { }
 

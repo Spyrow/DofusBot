@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
-namespace DofusBot.Packet
+
+namespace DofusBot.Misc
 {
     public abstract class Singleton<T> where T : class
     {

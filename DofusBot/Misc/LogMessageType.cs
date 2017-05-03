@@ -2,18 +2,22 @@
 {
     public enum LogMessageType
     {
-        General,
-        Equipe,
-        Guilde,
+        Global,
+        Team,
+        Guild,
         Alliance,
-        Groupe,
-        Commerce,
-        Recrutement,
-        Debutants,
-        Administrateurs,
-        Prive,
-        Informations,
-        Promotion,
-        Kolizeum
+        Party,
+        Sales,
+        Seek,
+        Noob,
+        Admin,
+        Private,
+        Info,
+        FightLog,
+        Public,
+        Arena,
+        Community,
+        Sender,
+        Default
     }
 }

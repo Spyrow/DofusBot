@@ -30,10 +30,6 @@ namespace DofusBot.Packet.Types.Game.Character
         public override void Deserialize(IDataReader reader)
         {
             base.Deserialize(reader);
-            _levelFunc(reader);
-        }
-        public void _levelFunc(IDataReader reader)
-        {
             Level = reader.ReadByte();
         }
     }

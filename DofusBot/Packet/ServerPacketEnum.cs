@@ -25,6 +25,8 @@
         BasicAckMessage = 6362,
         ServerSessionConstantsMessage = 6434,
         SelectedServerDataExtendedMessage = 6469,
+        CharacterLoadingCompleteMessage = 6471,
         BasicCharactersListMessage = 6475,
+        CurrentMapMessage = 220,
     }
 }

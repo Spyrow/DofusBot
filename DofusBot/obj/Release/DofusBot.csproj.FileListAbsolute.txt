@@ -7,3 +7,4 @@ C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.pdb
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\RSA.dll
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.exe
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\AES.dll
