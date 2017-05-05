@@ -1,4 +1,4 @@
-﻿using DofusBot.Misc.Extensions;
+﻿using DofusBot.Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 

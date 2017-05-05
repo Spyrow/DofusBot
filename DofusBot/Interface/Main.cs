@@ -1,5 +1,5 @@
-﻿using DofusBot.Misc;
-using DofusBot.Misc.Random;
+﻿using DofusBot.Utilities;
+using DofusBot.Utilities.Random;
 using DofusBot.Network;
 using DofusBot.Protocol;
 using DofusBot.Protocol.Enums;
@@ -23,6 +23,8 @@ using System.Drawing;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using DofusBot.Protocol.Network.Messages.Game.Inventory.Items;
+using DofusBot.Protocol.Network.Types.Game.Friend;
 
 namespace DofusBot.Interface
 {
@@ -32,6 +34,8 @@ namespace DofusBot.Interface
         private DofusBotSocket _GameSocket;
         private DofusBotPacketDeserializer _deserializer;
         private dynamic _ticket;
+
+        private ToolTip podsToolTip = new ToolTip();
 
         public Main()
         {
@@ -168,12 +172,9 @@ namespace DofusBot.Interface
             ServerPacketEnum PacketType = (ServerPacketEnum)e.Packet.MessageID;
             switch (PacketType)
             {
-                case ServerPacketEnum.ProtocolRequired:
-                    break;
-                case ServerPacketEnum.CredentialsAcknowledgementMessage:
-                    break;
-                case ServerPacketEnum.BasicAckMessage:
-                    break;
+                case ServerPacketEnum.ProtocolRequired: break;
+                case ServerPacketEnum.CredentialsAcknowledgementMessage: break;
+                case ServerPacketEnum.BasicAckMessage: break;
                 case ServerPacketEnum.TextInformationMessage:
                     TextInformationMessage text = (TextInformationMessage)e.Packet;
                     Log(LogMessageType.Arena, ((TextInformationTypeEnum)text.MsgType).ToString() + "ID = " + text.MsgId);
@@ -236,9 +237,7 @@ namespace DofusBot.Interface
                         connectionButton.Text = "Connexion";
                     });
                     break;
-                case ServerPacketEnum.IdentificationSuccessMessage:
-                    IdentificationSuccessMessage idSuccess = (IdentificationSuccessMessage)e.Packet;
-                    break;
+                case ServerPacketEnum.IdentificationSuccessMessage: break;
                 case ServerPacketEnum.ServerListMessage:
                     ServersListMessage servers = (ServersListMessage)e.Packet;
                     foreach(GameServerInformations i in servers.Servers ){
@@ -274,26 +273,74 @@ namespace DofusBot.Interface
                     Thread.Sleep(500);
                     _GameSocket.Send(new CharactersListRequestMessage());
                     break;
-                case ServerPacketEnum.AuthenticationTicketRefusedMessage:
-                    AuthenticationTicketRefusedMessage refused = (AuthenticationTicketRefusedMessage)e.Packet;
+                case ServerPacketEnum.AuthenticationTicketRefusedMessage: break;
+                case ServerPacketEnum.GameContextCreateMessage: break;
+                case ServerPacketEnum.SetCharacterRestrictionsMessage: break;
+                case ServerPacketEnum.BasicNoOperationMessage: break;
+                case ServerPacketEnum.NotificationListMessage: break;
+                case ServerPacketEnum.CharacterSelectedSuccessMessage: break;
+                case ServerPacketEnum.InventoryContentMessage: break;
+                case ServerPacketEnum.SetUpdateMessage: break;
+                case ServerPacketEnum.ShortcutBarContentMessage: break;
+                case ServerPacketEnum.RoomAvailableUpdateMessage: break;
+                case ServerPacketEnum.HavenBagPackListMessage: break;
+                case ServerPacketEnum.EmoteListMessage: break;
+                case ServerPacketEnum.JobDescriptionMessage: break;
+                case ServerPacketEnum.JobExperienceMultiUpdateMessage: break;
+                case ServerPacketEnum.JobCrafterDirectorySettingsMessage: break;
+                case ServerPacketEnum.AlignmentRankUpdateMessage: break;
+                case ServerPacketEnum.DareCreatedListMessage: break;
+                case ServerPacketEnum.AlmanachCalendarDateMessage: break;
+                case ServerPacketEnum.CharacterCapabilitiesMessage: break;
+                case ServerPacketEnum.GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage: break;
+                case ServerPacketEnum.AchievementListMessage: break;
+                case ServerPacketEnum.SpouseStatusMessage: break;
+                case ServerPacketEnum.SequenceNumberRequestMessage: break;
+                case ServerPacketEnum.GuildMemberWarnOnConnectionStateMessage: break;
+                case ServerPacketEnum.WarnOnPermaDeathStateMessage: break;
+                case ServerPacketEnum.FriendGuildWarnOnAchievementCompleteStateMessage: break;
+                case ServerPacketEnum.FriendWarnOnLevelGainStateMessage: break;
+                case ServerPacketEnum.FriendWarnOnConnectionStateMessage: break;
+                case ServerPacketEnum.BasicTimeMessage: break;
+                case ServerPacketEnum.ServerSettingsMessage: break;
+                case ServerPacketEnum.ServerOptionalFeaturesMessage: break;
+                case ServerPacketEnum.ServerSessionConstantsMessage: break;
+                case ServerPacketEnum.AccountCapabilitiesMessage: break;
+                case ServerPacketEnum.TrustStatusMessage: break;
+                case ServerPacketEnum.PrismsListMessage: break;
+                case ServerPacketEnum.CharacterExperienceGainMessage: break;
+                case ServerPacketEnum.IdolListMessage: break;
+                case ServerPacketEnum.SpellListMessage: break;
+                case ServerPacketEnum.EnabledChannelsMessage: break;
+                case ServerPacketEnum.GameMapMovementMessage: break;
+                case ServerPacketEnum.DareSubscribedListMessage: break;
+                case ServerPacketEnum.UpdateMapPlayersAgressableStatusMessage: break;
+                case ServerPacketEnum.CharacterStatsListMessage: break;
+                case ServerPacketEnum.MapComplementaryInformationsDataMessage: break;
+                case ServerPacketEnum.LifePointsRegenBeginMessage: break;
+                case ServerPacketEnum.GameContextDestroyMessage: break;
+                case ServerPacketEnum.IgnoredListMessage: break;
+                case ServerPacketEnum.FriendsListMessage:
+                    FriendsListMessage friendsList = (FriendsListMessage)e.Packet;
+                    foreach (FriendInformations f in friendsList.FriendsList)
+                    {
+                        Log(LogMessageType.Alliance, "Amis: " + f.AccountName + " | Points de Succés: " + f.AchievementPoints);
+                    }
                     break;
-                case ServerPacketEnum.BasicTimeMessage:
-                    BasicTimeMessage time = (BasicTimeMessage)e.Packet;
-                    break;
-                case ServerPacketEnum.ServerSettingsMessage:
-                    ServerSettingsMessage serverSettings = (ServerSettingsMessage)e.Packet;
-                    break;
-                case ServerPacketEnum.ServerOptionalFeaturesMessage:
-                    ServerOptionalFeaturesMessage serverFeatures = (ServerOptionalFeaturesMessage)e.Packet;
-                    break;
-                case ServerPacketEnum.ServerSessionConstantsMessage:
-                    ServerSessionConstantsMessage serverSession = (ServerSessionConstantsMessage)e.Packet;
-                    break;
-                case ServerPacketEnum.AccountCapabilitiesMessage:
-                    AccountCapabilitiesMessage accountCapabilities = (AccountCapabilitiesMessage)e.Packet;
-                    break;
-                case ServerPacketEnum.TrustStatusMessage:
-                    TrustStatusMessage trust = (TrustStatusMessage)e.Packet;
+                case ServerPacketEnum.AccountHouseMessage: break;
+                case ServerPacketEnum.StartupActionsListMessage:  break;
+                case ServerPacketEnum.ChatCommunityChannelCommunityMessage: break;
+                case ServerPacketEnum.DareRewardsListMessage: break;
+                case ServerPacketEnum.DareWonListMessage: break;
+                case ServerPacketEnum.MailStatusMessage: break;
+                case ServerPacketEnum.ChannelEnablingChangeMessage: break;
+                case ServerPacketEnum.InventoryWeightMessage:
+                    InventoryWeightMessage IWM = (InventoryWeightMessage)e.Packet;
+                    Invoke((MethodInvoker)delegate
+                    {
+                        podsProgressBar.Value = (int)IWM.Weight;
+                        podsProgressBar.Maximum = (int)IWM.WeightMax;
+                    });
                     break;
                 case ServerPacketEnum.CharacterLoadingCompleteMessage:
                     _GameSocket.Send(new FriendsGetListMessage());
@@ -309,12 +356,9 @@ namespace DofusBot.Interface
                     for (int i = 0; i < characters.Count; i++)
                     {
                         CharacterBaseInformations c = characters[i];
-                        if (c.Level > 0)
-                        {
-                            Log(LogMessageType.Info, "Connexion sur le personnage " + c.Name);
-                            _GameSocket.Send(new CharacterSelectionMessage((ulong)c.ObjectID));
-                            break;
-                        }
+                        Log(LogMessageType.Info, "Connexion sur le personnage " + c.Name);
+                        _GameSocket.Send(new CharacterSelectionMessage((ulong)c.ObjectID));
+                        break;
                     }
                     break;
                 default:
@@ -351,6 +395,14 @@ namespace DofusBot.Interface
         private void Main_Load(object sender, EventArgs e)
         {
             ProtocolManager.Initialize();
+        }
+
+        private void PodsProgressBar_MouseHover(object sender, EventArgs e)
+        {
+            podsToolTip.SetToolTip(podsProgressBar, "Pods: " + podsProgressBar.Value + " / " + podsProgressBar.Maximum);
+            podsToolTip.IsBalloon = false;
+            podsToolTip.ToolTipIcon = ToolTipIcon.None;
+            podsToolTip.UseAnimation = true;
         }
     }
 }

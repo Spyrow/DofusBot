@@ -1,0 +1,9 @@
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Debug\DofusBot.ProtocolBuilder.Main.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Debug\DofusBot.ProtocolBuilder.Properties.Resources.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Debug\DofusBot.ProtocolBuilder.csproj.GenerateResource.Cache
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\bin\Debug\DofusBot.ProtocolBuilder.exe.config
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\bin\Debug\DofusBot.ProtocolBuilder.exe
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\bin\Debug\DofusBot.ProtocolBuilder.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Debug\DofusBot.ProtocolBuilder.exe
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Debug\DofusBot.ProtocolBuilder.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Debug\DofusBot.ProtocolBuilder.csprojResolveAssemblyReference.cache

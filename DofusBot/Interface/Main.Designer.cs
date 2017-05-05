@@ -36,6 +36,8 @@
             this.accountNameLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.logTextBox = new System.Windows.Forms.RichTextBox();
+            this.podsProgressBar = new System.Windows.Forms.ProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,9 +111,28 @@
             this.logTextBox.Name = "logTextBox";
             this.logTextBox.ReadOnly = true;
             this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(892, 490);
+            this.logTextBox.Size = new System.Drawing.Size(892, 455);
             this.logTextBox.TabIndex = 13;
             this.logTextBox.Text = "";
+            // 
+            // podsProgressBar
+            // 
+            this.podsProgressBar.Location = new System.Drawing.Point(804, 539);
+            this.podsProgressBar.Name = "podsProgressBar";
+            this.podsProgressBar.Size = new System.Drawing.Size(100, 23);
+            this.podsProgressBar.TabIndex = 14;
+            this.podsProgressBar.MouseHover += new System.EventHandler(this.PodsProgressBar_MouseHover);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(754, 544);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 18);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Pods";
             // 
             // Main
             // 
@@ -119,6 +140,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
             this.ClientSize = new System.Drawing.Size(917, 574);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.podsProgressBar);
             this.Controls.Add(this.logTextBox);
             this.Controls.Add(this.connectionButton);
             this.Controls.Add(this.groupBox1);
@@ -132,6 +155,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -143,6 +167,8 @@
         private System.Windows.Forms.Label accountNameLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox logTextBox;
+        private System.Windows.Forms.ProgressBar podsProgressBar;
+        private System.Windows.Forms.Label label1;
     }
 }
 

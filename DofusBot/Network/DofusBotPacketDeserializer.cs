@@ -1,5 +1,4 @@
-﻿
-using DofusBot.Misc.Extensions;
+﻿using DofusBot.Utilities.Extensions;
 using DofusBot.Protocol;
 using System;
 
@@ -12,21 +11,16 @@ namespace DofusBot.Network
         public event EventHandler<NullPacketEventArg> ReceiveNullPacket;
         public delegate void ReceiveNullPacketEventHandler(NullPacketEventArg e);
 
-        protected virtual void OnReceivePacket(ServerPacketEnum packetType, PacketEventArg e)
-        {
-            if (e.Packet == null)
-                ReceiveNullPacket.Raise(this, new NullPacketEventArg(packetType));
-            else
-                ReceivePacket.Raise(this, e);
-        }
-
         public void GetPacket(object obj, PacketBufferEventArg e)
         {
             ServerPacketEnum packetType = (ServerPacketEnum) e.PacketId;
             BigEndianReader reader = new BigEndianReader(e.Data);
             NetworkMessage msg = MessageReceiver.BuildMessage(e.PacketId, reader);
 
-            OnReceivePacket(packetType, new PacketEventArg(msg));
+            if (msg == null)
+                ReceiveNullPacket.Raise(this, new NullPacketEventArg(packetType));
+            else
+                ReceivePacket.Raise(this, new PacketEventArg(msg));
         }
     }
 }

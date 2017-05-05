@@ -8,3 +8,8 @@ C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.Properties.Resources
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.csproj.GenerateResource.Cache
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.exe
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.csprojResolveAssemblyReference.cache
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.Protocol.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.Utilities.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.Protocol.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.Utilities.pdb
