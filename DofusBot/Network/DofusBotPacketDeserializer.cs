@@ -1,6 +1,6 @@
-﻿using DofusBot.Core;
-using DofusBot.Core.Network;
-using DofusBot.Packet;
+﻿
+using DofusBot.Misc.Extensions;
+using DofusBot.Protocol;
 using System;
 
 namespace DofusBot.Network
@@ -24,7 +24,8 @@ namespace DofusBot.Network
         {
             ServerPacketEnum packetType = (ServerPacketEnum) e.PacketId;
             BigEndianReader reader = new BigEndianReader(e.Data);
-            NetworkMessage msg = MessageReceiver.BuildMessage((uint) packetType, reader);
+            NetworkMessage msg = MessageReceiver.BuildMessage(e.PacketId, reader);
+
             OnReceivePacket(packetType, new PacketEventArg(msg));
         }
     }

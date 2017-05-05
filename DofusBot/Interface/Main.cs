@@ -1,21 +1,22 @@
-﻿using DofusBot.Enums;
-using DofusBot.Misc;
+﻿using DofusBot.Misc;
+using DofusBot.Misc.Random;
 using DofusBot.Network;
-using DofusBot.Packet;
-using DofusBot.Packet.Messages.Connection;
-using DofusBot.Packet.Messages.Game.Approach;
-using DofusBot.Packet.Messages.Game.Basic;
-using DofusBot.Packet.Messages.Game.Character.Choice;
-using DofusBot.Packet.Messages.Game.Chat.Channel;
-using DofusBot.Packet.Messages.Game.Context;
-using DofusBot.Packet.Messages.Game.Context.Roleplay;
-using DofusBot.Packet.Messages.Game.Friend;
-using DofusBot.Packet.Messages.Queues;
-using DofusBot.Packet.Messages.Secure;
-using DofusBot.Packet.Messages.Security;
-using DofusBot.Packet.Types;
-using DofusBot.Packet.Types.Connection;
-using DofusBot.Packet.Types.Game.Character.Choice;
+using DofusBot.Protocol;
+using DofusBot.Protocol.Enums;
+using DofusBot.Protocol.Network.Messages.Connection;
+using DofusBot.Protocol.Network.Messages.Game.Approach;
+using DofusBot.Protocol.Network.Messages.Game.Basic;
+using DofusBot.Protocol.Network.Messages.Game.Character.Choice;
+using DofusBot.Protocol.Network.Messages.Game.Chat.Channel;
+using DofusBot.Protocol.Network.Messages.Game.Context;
+using DofusBot.Protocol.Network.Messages.Game.Context.Roleplay;
+using DofusBot.Protocol.Network.Messages.Game.Friend;
+using DofusBot.Protocol.Network.Messages.Queues;
+using DofusBot.Protocol.Network.Messages.Secure;
+using DofusBot.Protocol.Network.Messages.Security;
+using DofusBot.Protocol.Network.Types;
+using DofusBot.Protocol.Network.Types.Connection;
+using DofusBot.Protocol.Network.Types.Game.Character.Choice;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -30,7 +31,7 @@ namespace DofusBot.Interface
         private DofusBotSocket _ServerSocket;
         private DofusBotSocket _GameSocket;
         private DofusBotPacketDeserializer _deserializer;
-        private object _ticket;
+        private dynamic _ticket;
 
         public Main()
         {
@@ -164,8 +165,8 @@ namespace DofusBot.Interface
 
         public void OnReceivedPacket(object source, PacketEventArg e)
         {
-            ServerPacketEnum packetType = (ServerPacketEnum)e.Packet.MessageID;
-            switch (packetType)
+            ServerPacketEnum PacketType = (ServerPacketEnum)e.Packet.MessageID;
+            switch (PacketType)
             {
                 case ServerPacketEnum.ProtocolRequired:
                     break;
@@ -239,7 +240,7 @@ namespace DofusBot.Interface
                     IdentificationSuccessMessage idSuccess = (IdentificationSuccessMessage)e.Packet;
                     break;
                 case ServerPacketEnum.ServerListMessage:
-                    ServerListMessage servers = (ServerListMessage)e.Packet;
+                    ServersListMessage servers = (ServersListMessage)e.Packet;
                     foreach(GameServerInformations i in servers.Servers ){
                         if (i.CharactersCount > 0 && i.IsSelectable && (ServerStatusEnum)i.Status == ServerStatusEnum.ONLINE)
                         {
@@ -250,7 +251,7 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.SelectedServerDataMessage:
                     SelectedServerDataMessage selected = (SelectedServerDataMessage)e.Packet;
-                    Log(LogMessageType.Info, "Connexion au serveur " + selected.ServerId + "...");     
+                    Log(LogMessageType.Info, "Connexion au serveur " + (ServerNameEnum)selected.ServerId + "...");     
                     _ticket = AES.AES.TicketTrans(selected.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selected.Address), selected.Port));
                     Log(LogMessageType.Info, "Connexion en cours <" + selected.Address + ":" + selected.Port + ">");
@@ -298,7 +299,7 @@ namespace DofusBot.Interface
                     _GameSocket.Send(new FriendsGetListMessage());
                     _GameSocket.Send(new IgnoredGetListMessage());
                     _GameSocket.Send(new SpouseGetInformationsMessage());
-                    _GameSocket.Send(new ClientKeyMessage(FlashKey.GetRandomFlashKey()));
+                    _GameSocket.Send(new ClientKeyMessage(FlashKeyGenerator.GetRandomFlashKey(accountNameTextBox.Text)));
                     _GameSocket.Send(new GameContextCreateRequestMessage());
                     _GameSocket.Send(new ChannelEnablingMessage(7, false));
                     break;
@@ -349,7 +350,7 @@ namespace DofusBot.Interface
 
         private void Main_Load(object sender, EventArgs e)
         {
-            //
+            ProtocolManager.Initialize();
         }
     }
 }

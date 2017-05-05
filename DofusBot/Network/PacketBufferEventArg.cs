@@ -5,19 +5,19 @@ namespace DofusBot.Network
     public class PacketBufferEventArg : EventArgs
     {
         private byte[] _data;
-        private short _packetId;
+        private int _packetId;
 
         public byte[] Data
         {
             get { return _data; }
         }
 
-        public short PacketId
+        public int PacketId
         {
             get { return _packetId; }
         }
 
-        public PacketBufferEventArg(short packetId, byte[] buffer)
+        public PacketBufferEventArg(int packetId, byte[] buffer)
         {
             _data = buffer;
             _packetId = packetId;

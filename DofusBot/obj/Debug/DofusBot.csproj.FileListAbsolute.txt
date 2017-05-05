@@ -1,11 +1,10 @@
-C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.csprojResolveAssemblyReference.cache
-C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.Interface.Main.resources
-C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.Properties.Resources.resources
-C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.csproj.GenerateResource.Cache
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.exe.config
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.exe
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\DofusBot.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\AES.dll
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\RSA.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.Interface.Main.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.Properties.Resources.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.csproj.GenerateResource.Cache
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.exe
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Debug\DofusBot.pdb
-C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Debug\AES.dll

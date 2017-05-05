@@ -43,7 +43,7 @@
             // 
             this.accountPasswdLabel.AutoSize = true;
             this.accountPasswdLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accountPasswdLabel.Location = new System.Drawing.Point(58, 47);
+            this.accountPasswdLabel.Location = new System.Drawing.Point(410, 21);
             this.accountPasswdLabel.Name = "accountPasswdLabel";
             this.accountPasswdLabel.Size = new System.Drawing.Size(92, 14);
             this.accountPasswdLabel.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             // accountPasswdTextBox
             // 
-            this.accountPasswdTextBox.Location = new System.Drawing.Point(156, 45);
+            this.accountPasswdTextBox.Location = new System.Drawing.Point(508, 19);
             this.accountPasswdTextBox.Name = "accountPasswdTextBox";
             this.accountPasswdTextBox.PasswordChar = '*';
             this.accountPasswdTextBox.Size = new System.Drawing.Size(207, 21);
@@ -69,9 +69,9 @@
             this.connectionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.connectionButton.Font = new System.Drawing.Font("Verdana", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.connectionButton.ForeColor = System.Drawing.Color.White;
-            this.connectionButton.Location = new System.Drawing.Point(417, 12);
+            this.connectionButton.Location = new System.Drawing.Point(777, 12);
             this.connectionButton.Name = "connectionButton";
-            this.connectionButton.Size = new System.Drawing.Size(178, 78);
+            this.connectionButton.Size = new System.Drawing.Size(127, 54);
             this.connectionButton.TabIndex = 10;
             this.connectionButton.Text = "Connexion";
             this.connectionButton.UseVisualStyleBackColor = false;
@@ -97,7 +97,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(387, 78);
+            this.groupBox1.Size = new System.Drawing.Size(736, 54);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Identifiants";
@@ -105,11 +105,11 @@
             // logTextBox
             // 
             this.logTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
-            this.logTextBox.Location = new System.Drawing.Point(12, 96);
+            this.logTextBox.Location = new System.Drawing.Point(12, 72);
             this.logTextBox.Name = "logTextBox";
             this.logTextBox.ReadOnly = true;
             this.logTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.logTextBox.Size = new System.Drawing.Size(583, 243);
+            this.logTextBox.Size = new System.Drawing.Size(892, 490);
             this.logTextBox.TabIndex = 13;
             this.logTextBox.Text = "";
             // 
@@ -118,11 +118,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.ClientSize = new System.Drawing.Size(608, 349);
+            this.ClientSize = new System.Drawing.Size(917, 574);
             this.Controls.Add(this.logTextBox);
             this.Controls.Add(this.connectionButton);
             this.Controls.Add(this.groupBox1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Main";

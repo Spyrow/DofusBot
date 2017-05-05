@@ -1,4 +1,4 @@
-﻿using DofusBot.Core.Network;
+﻿using DofusBot.Protocol;
 using System;
 
 namespace DofusBot.Network
