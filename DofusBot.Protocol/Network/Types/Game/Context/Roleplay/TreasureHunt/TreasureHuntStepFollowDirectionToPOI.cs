@@ -10,6 +10,12 @@
 
 namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt
 {
+    using System.Collections.Generic;
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class TreasureHuntStepFollowDirectionToPOI : TreasureHuntStep
     {
         

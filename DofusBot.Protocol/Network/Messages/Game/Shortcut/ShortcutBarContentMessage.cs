@@ -71,6 +71,7 @@ namespace DofusBot.Protocol.Network.Messages.Game.Shortcut
         
         public override void Serialize(IDataWriter writer)
         {
+            writer.WriteByte(m_barType);
             writer.WriteShort(((short)(m_shortcuts.Count)));
             int shortcutsIndex;
             for (shortcutsIndex = 0; (shortcutsIndex < m_shortcuts.Count); shortcutsIndex = (shortcutsIndex + 1))
@@ -79,11 +80,11 @@ namespace DofusBot.Protocol.Network.Messages.Game.Shortcut
                 writer.WriteUShort(((ushort)(objectToSend.TypeID)));
                 objectToSend.Serialize(writer);
             }
-            writer.WriteByte(m_barType);
         }
         
         public override void Deserialize(IDataReader reader)
         {
+            m_barType = reader.ReadByte();
             int shortcutsCount = reader.ReadUShort();
             int shortcutsIndex;
             m_shortcuts = new System.Collections.Generic.List<Shortcut>();
@@ -93,7 +94,6 @@ namespace DofusBot.Protocol.Network.Messages.Game.Shortcut
                 objectToAdd.Deserialize(reader);
                 m_shortcuts.Add(objectToAdd);
             }
-            m_barType = reader.ReadByte();
         }
     }
 }

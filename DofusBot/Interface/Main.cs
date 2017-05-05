@@ -1,6 +1,4 @@
-﻿using DofusBot.Utilities;
-using DofusBot.Utilities.Random;
-using DofusBot.Network;
+﻿using DofusBot.Network;
 using DofusBot.Protocol;
 using DofusBot.Protocol.Enums;
 using DofusBot.Protocol.Network.Messages.Connection;
@@ -10,36 +8,57 @@ using DofusBot.Protocol.Network.Messages.Game.Character.Choice;
 using DofusBot.Protocol.Network.Messages.Game.Chat.Channel;
 using DofusBot.Protocol.Network.Messages.Game.Context;
 using DofusBot.Protocol.Network.Messages.Game.Context.Roleplay;
+using DofusBot.Protocol.Network.Messages.Game.Context.Roleplay.Job;
 using DofusBot.Protocol.Network.Messages.Game.Friend;
+using DofusBot.Protocol.Network.Messages.Game.Inventory.Items;
+using DofusBot.Protocol.Network.Messages.Game.Inventory.Spells;
 using DofusBot.Protocol.Network.Messages.Queues;
-using DofusBot.Protocol.Network.Messages.Secure;
 using DofusBot.Protocol.Network.Messages.Security;
 using DofusBot.Protocol.Network.Types;
 using DofusBot.Protocol.Network.Types.Connection;
 using DofusBot.Protocol.Network.Types.Game.Character.Choice;
+using DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Job;
+using DofusBot.Protocol.Network.Types.Game.Data.Items;
+using DofusBot.Protocol.Network.Types.Game.Friend;
+using DofusBot.Protocol.Network.Types.Game.Interactive.Skill;
+using DofusBot.Utilities;
+using DofusBot.Utilities.Extensions;
+using DofusBot.Utilities.Random;
+using MaterialSkin;
+using MaterialSkin.Controls;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using DofusBot.Protocol.Network.Messages.Game.Inventory.Items;
-using DofusBot.Protocol.Network.Types.Game.Friend;
 
 namespace DofusBot.Interface
 {
-    public partial class Main : Form
+    public partial class Main : MaterialForm
     {
+        #region Properties
         private DofusBotSocket _ServerSocket;
         private DofusBotSocket _GameSocket;
         private DofusBotPacketDeserializer _deserializer;
         private dynamic _ticket;
 
-        private ToolTip podsToolTip = new ToolTip();
+        private ToolTip PodsToolTip = new ToolTip();
+        private uint PodsProgressValue = 0;
+        private uint PodsProgressMinimum = 0;
+        private uint PodsProgressMaximum = 100;
+        #endregion
 
         public Main()
         {
             InitializeComponent();
+
+            var materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.DARK;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
+
             _deserializer = new DofusBotPacketDeserializer();
             _deserializer.ReceivePacket += OnReceivedPacket;
             _deserializer.ReceiveNullPacket += OnReceivedNullPacket;
@@ -121,47 +140,6 @@ namespace DofusBot.Interface
             Invoke(log_callback);
         }
 
-        private void ConnectionButton_Click(object sender, EventArgs e)
-        {
-            string Connect = "Connexion";
-            string Disconnect = "Deconnexion";
-
-            Invoke((MethodInvoker)delegate
-            {
-                logTextBox.Text = "";
-
-                if (connectionButton.Text == Connect)
-                {
-                    if (string.IsNullOrWhiteSpace(accountNameTextBox.Text) || string.IsNullOrWhiteSpace(accountPasswdTextBox.Text))
-                        Log(LogMessageType.Admin, "Vous devez rentrer vos identifiants.");
-                    else
-                    {
-                        string DofusIP = "213.248.126.40";
-                        int DofusPort = 5555;
-                        _ServerSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(DofusIP), DofusPort));
-                        Log(LogMessageType.Info, "Connexion en cours <" + DofusIP + ":" + DofusPort + ">");
-                        _ServerSocket.ConnectEndListen();
-
-                        connectionButton.Text = Disconnect;
-                    }
-                }
-                else
-                {
-                    _ServerSocket.CloseSocket();
-                    _ServerSocket = null;
-                    
-                    if (_GameSocket != null)
-                    {
-                        _GameSocket.CloseSocket();
-                        _GameSocket = null;
-                    }
-
-                    Log(LogMessageType.Info, "Déconnecté.");
-                    connectionButton.Text = Connect;
-                }
-            });             
-        }
-
         public void OnReceivedNullPacket(object source, NullPacketEventArg e)
         {
             Log(LogMessageType.Admin, "Packet: [" + e.PacketType + "] is not implemented.");
@@ -203,9 +181,9 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.HelloConnectMessage:
                     Log(LogMessageType.Info, "Connecté au serveur d'authentification.");
                     HelloConnectMessage helloConnectMessage = (HelloConnectMessage)e.Packet;
-                    sbyte[] credentials = RSA.RSAKey.Encrypt(helloConnectMessage.key, accountNameTextBox.Text, accountPasswdTextBox.Text, helloConnectMessage.salt);
+                    sbyte[] credentials = RSA.RSAKey.Encrypt(helloConnectMessage.key, accountNameTextField.Text, accountPasswordTextField.Text, helloConnectMessage.salt);
                     VersionExtended version = new VersionExtended(2, 41, 1, 120264, 1, (sbyte)BuildTypeEnum.RELEASE, 1, 1);
-                    IdentificationMessage idm = new IdentificationMessage(false, false, false, version, "fr", credentials, 0, 0, new ushort[0]);
+                    IdentificationMessage idm = new IdentificationMessage(autoConnectCheckBox.Checked, false, false, version, "fr", credentials, 0, 0, new ushort[0]);
                     Log(LogMessageType.Info, "Envois des informations d'identification...");
                     _ServerSocket.Send(idm);
                     break;
@@ -227,15 +205,7 @@ namespace DofusBot.Interface
                     IdentificationFailedMessage msg = (IdentificationFailedMessage)e.Packet;
                     Log(LogMessageType.Public, "Identification échouée !");
                     Log(LogMessageType.Public, ((IdentificationFailureReasonEnum)msg.Reason).ToString());
-                    Invoke((MethodInvoker)delegate
-                    {
-                        if (_ServerSocket != null)
-                        {
-                            _ServerSocket.CloseSocket();
-                            _ServerSocket = null;
-                        }
-                        connectionButton.Text = "Connexion";
-                    });
+                    DisconnectHandler();
                     break;
                 case ServerPacketEnum.IdentificationSuccessMessage: break;
                 case ServerPacketEnum.ServerListMessage:
@@ -260,7 +230,7 @@ namespace DofusBot.Interface
                     break;
                 case ServerPacketEnum.SelectedServerDataExtendedMessage:
                     SelectedServerDataExtendedMessage selectedExtended = (SelectedServerDataExtendedMessage)e.Packet;
-                    Log(LogMessageType.Info, "Connecté au serveur : " + selectedExtended.ServerId);
+                    Log(LogMessageType.Info, "Connecté au serveur : " + (ServerNameEnum)selectedExtended.ServerId + "...");
                     _ticket = AES.AES.TicketTrans(selectedExtended.Ticket);
                     _GameSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(selectedExtended.Address), selectedExtended.Port));
                     Log(LogMessageType.Info, "Connexion en cours <" + selectedExtended.Address + ":" + selectedExtended.Port + ">");
@@ -279,21 +249,41 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.BasicNoOperationMessage: break;
                 case ServerPacketEnum.NotificationListMessage: break;
                 case ServerPacketEnum.CharacterSelectedSuccessMessage: break;
-                case ServerPacketEnum.InventoryContentMessage: break;
+                case ServerPacketEnum.InventoryContentMessage:
+                    InventoryContentMessage inventory = (InventoryContentMessage)e.Packet;
+                    Invoke((MethodInvoker)delegate
+                    {
+                        kamasLabel.Text = inventory.Kamas.ToString();
+                    });
+                    break;
                 case ServerPacketEnum.SetUpdateMessage: break;
                 case ServerPacketEnum.ShortcutBarContentMessage: break;
                 case ServerPacketEnum.RoomAvailableUpdateMessage: break;
                 case ServerPacketEnum.HavenBagPackListMessage: break;
                 case ServerPacketEnum.EmoteListMessage: break;
-                case ServerPacketEnum.JobDescriptionMessage: break;
+                case ServerPacketEnum.JobDescriptionMessage:
+                    JobDescriptionMessage jobs = (JobDescriptionMessage)e.Packet;
+                    foreach (JobDescription j in jobs.JobsDescription)
+                    {
+                        foreach (SkillActionDescription s in j.Skills)
+                        {
+                            //Log(LogMessageType.Noob, "Métier: " + j.JobId + " | Skill: " + s.SkillId);
+                        }
+                    }
+                    break;
                 case ServerPacketEnum.JobExperienceMultiUpdateMessage: break;
                 case ServerPacketEnum.JobCrafterDirectorySettingsMessage: break;
                 case ServerPacketEnum.AlignmentRankUpdateMessage: break;
+                case ServerPacketEnum.ServerExperienceModificatorMessage: break;
                 case ServerPacketEnum.DareCreatedListMessage: break;
                 case ServerPacketEnum.AlmanachCalendarDateMessage: break;
                 case ServerPacketEnum.CharacterCapabilitiesMessage: break;
                 case ServerPacketEnum.GameRolePlayArenaUpdatePlayerInfosAllQueuesMessage: break;
                 case ServerPacketEnum.AchievementListMessage: break;
+                case ServerPacketEnum.BasicLatencyStatsRequestMessage: break;
+                case ServerPacketEnum.GameContextRemoveElementMessage: break;
+                case ServerPacketEnum.GameMapChangeOrientationMessage: break;
+                case ServerPacketEnum.GameRolePlayShowActorMessage: break;
                 case ServerPacketEnum.SpouseStatusMessage: break;
                 case ServerPacketEnum.SequenceNumberRequestMessage: break;
                 case ServerPacketEnum.GuildMemberWarnOnConnectionStateMessage: break;
@@ -305,18 +295,27 @@ namespace DofusBot.Interface
                 case ServerPacketEnum.ServerSettingsMessage: break;
                 case ServerPacketEnum.ServerOptionalFeaturesMessage: break;
                 case ServerPacketEnum.ServerSessionConstantsMessage: break;
+                case ServerPacketEnum.StatedElementUpdatedMessage: break;
+                case ServerPacketEnum.InteractiveElementUpdatedMessage: break;
+                case ServerPacketEnum.InteractiveUsedMessage: break;
                 case ServerPacketEnum.AccountCapabilitiesMessage: break;
                 case ServerPacketEnum.TrustStatusMessage: break;
                 case ServerPacketEnum.PrismsListMessage: break;
                 case ServerPacketEnum.CharacterExperienceGainMessage: break;
                 case ServerPacketEnum.IdolListMessage: break;
-                case ServerPacketEnum.SpellListMessage: break;
+                case ServerPacketEnum.SpellListMessage:break; break;
                 case ServerPacketEnum.EnabledChannelsMessage: break;
                 case ServerPacketEnum.GameMapMovementMessage: break;
                 case ServerPacketEnum.DareSubscribedListMessage: break;
                 case ServerPacketEnum.UpdateMapPlayersAgressableStatusMessage: break;
                 case ServerPacketEnum.CharacterStatsListMessage: break;
-                case ServerPacketEnum.MapComplementaryInformationsDataMessage: break;
+                case ServerPacketEnum.MapComplementaryInformationsDataMessage:
+                    MapComplementaryInformationsDataMessage mapInfos = (MapComplementaryInformationsDataMessage)e.Packet;
+                    Invoke((MethodInvoker)delegate
+                    {
+                        currentMapIdLabel.Text = mapInfos.MapId.ToString();
+                    });
+                    break;
                 case ServerPacketEnum.LifePointsRegenBeginMessage: break;
                 case ServerPacketEnum.GameContextDestroyMessage: break;
                 case ServerPacketEnum.IgnoredListMessage: break;
@@ -324,7 +323,7 @@ namespace DofusBot.Interface
                     FriendsListMessage friendsList = (FriendsListMessage)e.Packet;
                     foreach (FriendInformations f in friendsList.FriendsList)
                     {
-                        Log(LogMessageType.Alliance, "Amis: " + f.AccountName + " | Points de Succés: " + f.AchievementPoints);
+                        Log(LogMessageType.Noob, "Amis: " + f.AccountName + " | Dernière Connexion: " + DateExtensions.UnixTimestampToDateTime(f.LastConnection).ToLongDateString() + " | Points de Succès: " + f.AchievementPoints);
                     }
                     break;
                 case ServerPacketEnum.AccountHouseMessage: break;
@@ -338,15 +337,16 @@ namespace DofusBot.Interface
                     InventoryWeightMessage IWM = (InventoryWeightMessage)e.Packet;
                     Invoke((MethodInvoker)delegate
                     {
-                        podsProgressBar.Value = (int)IWM.Weight;
-                        podsProgressBar.Maximum = (int)IWM.WeightMax;
+                        PodsProgressValue = IWM.Weight;
+                        PodsProgressMaximum = IWM.WeightMax;
+                        PodsProgress.Refresh();
                     });
                     break;
                 case ServerPacketEnum.CharacterLoadingCompleteMessage:
                     _GameSocket.Send(new FriendsGetListMessage());
                     _GameSocket.Send(new IgnoredGetListMessage());
                     _GameSocket.Send(new SpouseGetInformationsMessage());
-                    _GameSocket.Send(new ClientKeyMessage(FlashKeyGenerator.GetRandomFlashKey(accountNameTextBox.Text)));
+                    _GameSocket.Send(new ClientKeyMessage(FlashKeyGenerator.GetRandomFlashKey(accountNameTextField.Text)));
                     _GameSocket.Send(new GameContextCreateRequestMessage());
                     _GameSocket.Send(new ChannelEnablingMessage(7, false));
                     break;
@@ -397,12 +397,104 @@ namespace DofusBot.Interface
             ProtocolManager.Initialize();
         }
 
-        private void PodsProgressBar_MouseHover(object sender, EventArgs e)
+        private void DisconnectHandler()
         {
-            podsToolTip.SetToolTip(podsProgressBar, "Pods: " + podsProgressBar.Value + " / " + podsProgressBar.Maximum);
-            podsToolTip.IsBalloon = false;
-            podsToolTip.ToolTipIcon = ToolTipIcon.None;
-            podsToolTip.UseAnimation = true;
+            Invoke((MethodInvoker)delegate
+            {
+                if (_ServerSocket != null)
+                {
+                    _ServerSocket.CloseSocket();
+                    _ServerSocket = null;
+                }
+
+                if (_GameSocket != null)
+                {
+                    _GameSocket.CloseSocket();
+                    _GameSocket = null;
+                }
+
+                currentMapIdLabel.Text = "0";
+
+                kamasLabel.Text = "0";
+
+                PodsProgressMaximum = 100;
+                PodsProgressValue = 0;
+                PodsProgress.Refresh();
+
+                connectionButton.Text = "Connexion";
+                Log(LogMessageType.Info, "Déconnecté.");
+            });
+        }
+
+        // Show the Progress.
+        private void PodsProgress_Paint(object sender, PaintEventArgs e)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                // Clear the background.
+                e.Graphics.Clear(PodsProgress.BackColor);
+
+                // Draw the progress bar.
+                float fraction =
+                    (float)(PodsProgressValue - PodsProgressMinimum) /
+                    (PodsProgressMaximum - PodsProgressMinimum);
+                int wid = (int)(fraction * PodsProgress.ClientSize.Width);
+                e.Graphics.FillRectangle(
+                    Brushes.Chocolate, 0, 0, wid,
+                    PodsProgress.ClientSize.Height);
+
+                // Draw the text.
+                e.Graphics.TextRenderingHint =
+                    TextRenderingHint.AntiAliasGridFit;
+                using (StringFormat sf = new StringFormat())
+                {
+                    sf.Alignment = StringAlignment.Center;
+                    sf.LineAlignment = StringAlignment.Center;
+                    int percent = (int)(fraction * 100);
+                    e.Graphics.DrawString(
+                        percent.ToString() + "%",
+                        this.Font, Brushes.Black,
+                        PodsProgress.ClientRectangle, sf);
+                }
+            });
+        }
+
+        private void connectionButton_Click(object sender, EventArgs e)
+        {
+            string Connect = "Connexion";
+            string Disconnect = "Deconnexion";
+
+            Invoke((MethodInvoker)delegate
+            {
+                if (connectionButton.Text == Connect)
+                {
+                    if (string.IsNullOrWhiteSpace(accountNameTextField.Text) || string.IsNullOrWhiteSpace(accountPasswordTextField.Text))
+                        Log(LogMessageType.Admin, "Vous devez rentrer vos identifiants.");
+                    else
+                    {
+                        string DofusIP = "213.248.126.40";
+                        int DofusPort = 5555;
+                        _ServerSocket = new DofusBotSocket(_deserializer, new IPEndPoint(IPAddress.Parse(DofusIP), DofusPort));
+                        Log(LogMessageType.Info, "Connexion en cours <" + DofusIP + ":" + DofusPort + ">");
+                        _ServerSocket.ConnectEndListen();
+
+                        connectionButton.Text = Disconnect;
+                    }
+                }
+                else
+                {
+                    DisconnectHandler();
+                }
+            });
+        }
+
+        private void MouseHover_PodsProgress(object sender, EventArgs e)
+        {
+            PodsToolTip.SetToolTip(PodsProgress, PodsProgressValue + " / " + PodsProgressMaximum);
+            PodsToolTip.ToolTipTitle = "Pods";
+            PodsToolTip.IsBalloon = false;
+            PodsToolTip.ToolTipIcon = ToolTipIcon.None;
+            PodsToolTip.UseAnimation = true;
         }
     }
 }

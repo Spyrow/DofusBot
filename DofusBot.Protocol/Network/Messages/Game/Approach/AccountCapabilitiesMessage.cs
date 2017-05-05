@@ -1,6 +1,6 @@
 ﻿namespace DofusBot.Protocol.Network.Messages.Game.Approach
 {
-    public class AccountCapabilitiesMessage : NetworkMessage
+    class AccountCapabilitiesMessage : NetworkMessage
     {
         public const int ProtocolId = 6216;
         public override int MessageID { get { return ProtocolId; } }

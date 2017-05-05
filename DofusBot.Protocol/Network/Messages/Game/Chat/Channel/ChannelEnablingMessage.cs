@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Chat.Channel
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Chat.Channel
 {
     public class ChannelEnablingMessage : NetworkMessage
     {

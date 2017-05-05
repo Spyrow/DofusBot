@@ -10,14 +10,11 @@
 
 namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Job
 {
-    using DofusBot.Protocol.Network.Types.Game.Interactive.Skill;
-    using DofusBot.Protocol.Network;
-    using System.Collections.Generic;
-    using DofusBot.Protocol.Network.Messages;
-    using DofusBot.Protocol.Network.Types;
     using DofusBot.Protocol;
-    
-    
+    using DofusBot.Protocol.Network.Types.Game.Interactive.Skill;
+    using System.Collections.Generic;
+
+
     public class JobDescription : NetworkType
     {
         
@@ -71,6 +68,7 @@ namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Job
         
         public override void Serialize(IDataWriter writer)
         {
+            writer.WriteByte(m_jobId);
             writer.WriteShort(((short)(m_skills.Count)));
             int skillsIndex;
             for (skillsIndex = 0; (skillsIndex < m_skills.Count); skillsIndex = (skillsIndex + 1))
@@ -79,11 +77,11 @@ namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Job
                 writer.WriteUShort(((ushort)(objectToSend.TypeID)));
                 objectToSend.Serialize(writer);
             }
-            writer.WriteByte(m_jobId);
         }
         
         public override void Deserialize(IDataReader reader)
         {
+            m_jobId = reader.ReadByte();
             int skillsCount = reader.ReadUShort();
             int skillsIndex;
             m_skills = new System.Collections.Generic.List<SkillActionDescription>();
@@ -93,7 +91,6 @@ namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Job
                 objectToAdd.Deserialize(reader);
                 m_skills.Add(objectToAdd);
             }
-            m_jobId = reader.ReadByte();
         }
     }
 }

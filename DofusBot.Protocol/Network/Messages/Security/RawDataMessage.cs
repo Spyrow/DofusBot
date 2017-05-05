@@ -1,4 +1,7 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Security
+﻿ 
+using System;
+
+namespace DofusBot.Protocol.Network.Messages.Security
 {
     public class RawDataMessage : NetworkMessage
     {

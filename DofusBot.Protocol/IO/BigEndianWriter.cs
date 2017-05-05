@@ -289,22 +289,12 @@ public class BigEndianWriter : IDataWriter, IDisposable
         WriteVar((ushort)@uint);
     }
 
-    public void WriteVarUhShort(ushort @uint)
-    {
-        WriteVar((ushort)@uint);
-    }
-
     public void WriteVarInt(int @int)
     {
         WriteVar((uint)@int);
     }
 
     public void WriteVarInt(uint @uint)
-    {
-        WriteVar(@uint);
-    }
-
-    public void WriteVarUhInt(uint @uint)
     {
         WriteVar(@uint);
     }
@@ -319,11 +309,6 @@ public class BigEndianWriter : IDataWriter, IDisposable
         WriteVar(@ulong);
     }
 
-    public void WriteVarUhLong(ulong @ulong)
-    {
-        WriteVar(@ulong);
-    }
-
     private void WriteVar(ulong number)
     {
         while (number > 127)
@@ -333,5 +318,6 @@ public class BigEndianWriter : IDataWriter, IDisposable
         }
         WriteByte((byte)number);
     }
+
     #endregion
 }

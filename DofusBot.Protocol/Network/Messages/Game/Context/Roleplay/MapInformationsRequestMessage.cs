@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Context.Roleplay
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Context.Roleplay
 {
     public class MapInformationsRequestMessage : NetworkMessage
     {

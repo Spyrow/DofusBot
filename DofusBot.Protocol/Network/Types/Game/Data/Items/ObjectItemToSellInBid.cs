@@ -10,6 +10,13 @@
 
 namespace DofusBot.Protocol.Network.Types.Game.Data.Items
 {
+    using DofusBot.Protocol.Network.Types.Game.Data.Items.Effects;
+    using System.Collections.Generic;
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class ObjectItemToSellInBid : ObjectItemToSell
     {
         

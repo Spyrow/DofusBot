@@ -1,4 +1,5 @@
-﻿using DofusBot.Protocol.Network.Types.Game.Character.Choice;
+﻿ 
+using DofusBot.Protocol.Network.Types.Game.Character.Choice;
 using System.Collections.Generic;
 
 namespace DofusBot.Protocol.Network.Messages.Game.Character.Choice

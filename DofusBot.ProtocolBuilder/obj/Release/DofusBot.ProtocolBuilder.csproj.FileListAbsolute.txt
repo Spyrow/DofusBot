@@ -1,0 +1,8 @@
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\bin\Release\DofusBot.ProtocolBuilder.exe.config
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\bin\Release\DofusBot.ProtocolBuilder.exe
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\bin\Release\DofusBot.ProtocolBuilder.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Release\DofusBot.ProtocolBuilder.Main.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Release\DofusBot.ProtocolBuilder.Properties.Resources.resources
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Release\DofusBot.ProtocolBuilder.csproj.GenerateResource.Cache
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Release\DofusBot.ProtocolBuilder.exe
+C:\Users\yovan\Desktop\DofusBot\DofusBot.ProtocolBuilder\obj\Release\DofusBot.ProtocolBuilder.pdb

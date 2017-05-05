@@ -1,0 +1,7 @@
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\bin\Release\DofusBot.Protocol.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\bin\Release\DofusBot.Protocol.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\bin\Release\DofusBot.Utilities.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\bin\Release\DofusBot.Utilities.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\obj\Release\DofusBot.Protocol.csprojResolveAssemblyReference.cache
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\obj\Release\DofusBot.Protocol.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot.Protocol\obj\Release\DofusBot.Protocol.pdb

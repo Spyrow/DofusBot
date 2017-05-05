@@ -10,10 +10,16 @@
 
 namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay
 {
-    using DofusBot.Protocol;
     using DofusBot.Protocol.Network.Types.Game.Context.Roleplay.TreasureHunt;
-
-
+    using DofusBot.Protocol.Network.Types.Game.Look;
+    using DofusBot.Protocol.Network.Types.Game.Context;
+    using DofusBot.Protocol.Network;
+    using System.Collections.Generic;
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class GameRolePlayPortalInformations : GameRolePlayActorInformations
     {
         

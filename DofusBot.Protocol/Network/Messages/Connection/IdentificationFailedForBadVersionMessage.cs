@@ -16,7 +16,7 @@ namespace DofusBot.Protocol.Network.Messages.Connection
     public class IdentificationFailedForBadVersionMessage : IdentificationFailedMessage
     {
         
-        public const int ProtocolId = 21;
+        public new const int ProtocolId = 21;
         
         public override int MessageID
         {

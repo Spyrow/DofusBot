@@ -15,8 +15,6 @@ namespace DofusBot.Protocol.Network.Types.Game.Friend
     using System.Collections.Generic;
     using DofusBot.Protocol.Network.Messages;
     using DofusBot.Protocol.Network.Types;
-    
-    
     using DofusBot.Protocol;
     
     

@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Friend
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Friend
 {
     public class SpouseGetInformationsMessage : NetworkMessage
     {

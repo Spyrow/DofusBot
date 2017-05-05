@@ -15,15 +15,13 @@ namespace DofusBot.Protocol.Network.Types.Game.Data.Items
     using System.Collections.Generic;
     using DofusBot.Protocol.Network.Messages;
     using DofusBot.Protocol.Network.Types;
-    
-    
     using DofusBot.Protocol;
     
     
     public class ObjectItem : Item
     {
         
-        public new const int ProtocolId = 37;
+        public const int ProtocolId = 37;
         
         public override int TypeID
         {

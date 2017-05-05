@@ -9,3 +9,8 @@ C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.exe
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.pdb
 C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\AES.dll
 C:\Users\yovan\Desktop\DofusBot\DofusBot\obj\Release\DofusBot.csprojResolveAssemblyReference.cache
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.Protocol.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.Utilities.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\MaterialSkin.dll
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.Protocol.pdb
+C:\Users\yovan\Desktop\DofusBot\DofusBot\bin\Release\DofusBot.Utilities.pdb

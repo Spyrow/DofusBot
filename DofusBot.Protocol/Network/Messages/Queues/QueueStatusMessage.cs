@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Queues
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Queues
 {
     public class QueueStatusMessage : NetworkMessage
     {

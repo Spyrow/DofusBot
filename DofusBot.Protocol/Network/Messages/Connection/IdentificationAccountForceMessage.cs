@@ -10,6 +10,7 @@
 
 namespace DofusBot.Protocol.Network.Messages.Connection
 {
+
     public class IdentificationAccountForceMessage : IdentificationMessage
     {
         

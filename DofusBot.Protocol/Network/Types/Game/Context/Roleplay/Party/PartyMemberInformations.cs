@@ -10,13 +10,17 @@
 
 namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
-    using DofusBot.Protocol;
     using DofusBot.Protocol.Network.Types.Game.Character.Choice;
     using DofusBot.Protocol.Network.Types.Game.Character.Status;
     using DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion;
+    using DofusBot.Protocol.Network.Types.Game.Look;
+    using DofusBot.Protocol.Network;
     using System.Collections.Generic;
-
-
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class PartyMemberInformations : CharacterBaseInformations
     {
         

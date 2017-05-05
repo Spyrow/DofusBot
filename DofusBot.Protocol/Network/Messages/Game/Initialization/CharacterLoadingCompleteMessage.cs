@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Initialization
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Initialization
 {
     public class CharacterLoadingCompleteMessage : NetworkMessage
     {

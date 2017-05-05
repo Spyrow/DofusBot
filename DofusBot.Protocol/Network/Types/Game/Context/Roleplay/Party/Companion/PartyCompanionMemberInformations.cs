@@ -14,8 +14,6 @@ namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Party.Companion
     using System.Collections.Generic;
     using DofusBot.Protocol.Network.Messages;
     using DofusBot.Protocol.Network.Types;
-    
-    
     using DofusBot.Protocol;
     
     

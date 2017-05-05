@@ -10,14 +10,17 @@
 
 namespace DofusBot.Protocol.Network.Messages.Game.Context.Roleplay
 {
-    using DofusBot.Protocol;
-    using DofusBot.Protocol.Network.Types.Game.Context.Fight;
-    using DofusBot.Protocol.Network.Types.Game.Context.Roleplay;
     using DofusBot.Protocol.Network.Types.Game.House;
+    using DofusBot.Protocol.Network.Types.Game.Context.Roleplay;
     using DofusBot.Protocol.Network.Types.Game.Interactive;
+    using DofusBot.Protocol.Network.Types.Game.Context.Fight;
+    using DofusBot.Protocol.Network;
     using System.Collections.Generic;
-
-
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class MapComplementaryInformationsDataMessage : NetworkMessage
     {
         

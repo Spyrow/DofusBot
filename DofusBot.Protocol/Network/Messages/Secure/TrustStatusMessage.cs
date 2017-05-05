@@ -1,6 +1,6 @@
 ﻿namespace DofusBot.Protocol.Network.Messages.Secure
 {
-    public class TrustStatusMessage : NetworkMessage
+    class TrustStatusMessage : NetworkMessage
     {
         public const int ProtocolId = 6267;
         public override int MessageID { get { return ProtocolId; } }

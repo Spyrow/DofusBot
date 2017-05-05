@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Approach
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Approach
 {
     public class HelloGameMessage : NetworkMessage
     {

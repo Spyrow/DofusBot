@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Character.Choice
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Character.Choice
 {
     public class CharactersListRequestMessage : NetworkMessage
     {

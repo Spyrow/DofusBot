@@ -14,6 +14,7 @@ namespace DofusBot.Protocol.Network.Types.Game.Friend
     using DofusBot.Protocol.Network.Types.Game.Character.Status;
     using DofusBot.Protocol.Network.Types.Game.Context.Roleplay;
 
+
     public class FriendOnlineInformations : FriendInformations
     {
         

@@ -10,8 +10,12 @@
 
 namespace DofusBot.Protocol.Network.Messages.Connection
 {
-
-
+    using System.Collections.Generic;
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class IdentificationFailedBannedMessage : IdentificationFailedMessage
     {
         

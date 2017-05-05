@@ -70,6 +70,7 @@ namespace DofusBot.Protocol.Network.Messages.Game.Inventory.Spells
         
         public override void Serialize(IDataWriter writer)
         {
+            writer.WriteBoolean(m_spellPrevisualization);
             writer.WriteShort(((short)(m_spells.Count)));
             int spellsIndex;
             for (spellsIndex = 0; (spellsIndex < m_spells.Count); spellsIndex = (spellsIndex + 1))
@@ -77,11 +78,11 @@ namespace DofusBot.Protocol.Network.Messages.Game.Inventory.Spells
                 SpellItem objectToSend = m_spells[spellsIndex];
                 objectToSend.Serialize(writer);
             }
-            writer.WriteBoolean(m_spellPrevisualization);
         }
         
         public override void Deserialize(IDataReader reader)
         {
+            m_spellPrevisualization = reader.ReadBoolean();
             int spellsCount = reader.ReadUShort();
             int spellsIndex;
             m_spells = new System.Collections.Generic.List<SpellItem>();
@@ -91,7 +92,6 @@ namespace DofusBot.Protocol.Network.Messages.Game.Inventory.Spells
                 objectToAdd.Deserialize(reader);
                 m_spells.Add(objectToAdd);
             }
-            m_spellPrevisualization = reader.ReadBoolean();
         }
     }
 }

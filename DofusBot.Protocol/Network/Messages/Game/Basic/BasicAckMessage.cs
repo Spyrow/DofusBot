@@ -1,4 +1,5 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Basic
+﻿ 
+namespace DofusBot.Protocol.Network.Messages.Game.Basic
 {
     class BasicAckMessage : NetworkMessage
     {

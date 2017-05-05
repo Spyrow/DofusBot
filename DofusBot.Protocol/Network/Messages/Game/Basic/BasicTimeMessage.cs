@@ -1,6 +1,8 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Basic
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Basic
 {
-    public class BasicTimeMessage : NetworkMessage
+    class BasicTimeMessage : NetworkMessage
     {
         public const int ProtocolId = 175;
         public override int MessageID { get { return ProtocolId; } }

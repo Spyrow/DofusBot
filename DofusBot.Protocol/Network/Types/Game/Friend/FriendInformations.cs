@@ -10,11 +10,17 @@
 
 namespace DofusBot.Protocol.Network.Types.Game.Friend
 {
+    using System.Collections.Generic;
+    using DofusBot.Protocol.Network.Messages;
+    using DofusBot.Protocol.Network.Types;
+    using DofusBot.Protocol;
+    
+    
     public class FriendInformations : AbstractContactInformations
     {
-
-        public new const int ProtocolId = 78;
-
+        
+        public const int ProtocolId = 78;
+        
         public override int TypeID
         {
             get

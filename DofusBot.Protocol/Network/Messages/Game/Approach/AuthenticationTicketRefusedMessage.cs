@@ -1,6 +1,8 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Approach
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Approach
 {
-    public class AuthenticationTicketRefusedMessage : NetworkMessage
+    class AuthenticationTicketRefusedMessage : NetworkMessage
     {
         public const int ProtocolId = 112;
         public override int MessageID { get { return ProtocolId; } }

@@ -10,14 +10,11 @@
 
 namespace DofusBot.Protocol.Network.Messages.Game.Prism
 {
-    using DofusBot.Protocol.Network.Types.Game.Prism;
-    using DofusBot.Protocol.Network;
-    using System.Collections.Generic;
-    using DofusBot.Protocol.Network.Messages;
-    using DofusBot.Protocol.Network.Types;
     using DofusBot.Protocol;
-    
-    
+    using DofusBot.Protocol.Network.Types.Game.Prism;
+    using System.Collections.Generic;
+
+
     public class PrismsListMessage : NetworkMessage
     {
         

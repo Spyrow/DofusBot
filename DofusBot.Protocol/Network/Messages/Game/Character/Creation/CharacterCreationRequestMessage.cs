@@ -10,12 +10,9 @@
 
 namespace DofusBot.Protocol.Network.Messages.Game.Character.Creation
 {
-    using DofusBot.Protocol;
-
-
     public class CharacterCreationRequestMessage : NetworkMessage
     {
-        
+
         public const int ProtocolId = 160;
         
         public override int MessageID

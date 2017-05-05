@@ -137,8 +137,4 @@ public interface IDataWriter
     /// </summary>
     /// <returns></returns>
     void WriteVarShort(ushort @uint);
-
-    void WriteVarUhInt(uint @uint);
-    void WriteVarUhShort(ushort @ushort);
-    void WriteVarUhLong(ulong @ulong);
 }

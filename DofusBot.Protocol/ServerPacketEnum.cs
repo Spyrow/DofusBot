@@ -1,6 +1,6 @@
 ﻿namespace DofusBot.Protocol
 {
-    public enum ServerPacketEnum
+    public enum ServerPacketEnum : int
     {
         ProtocolRequired = 1,
         HelloConnectMessage = 3,
@@ -21,10 +21,12 @@
         GameContextDestroyMessage = 201,
         CurrentMapMessage = 220,
         MapComplementaryInformationsDataMessage = 226,
+        GameContextRemoveElementMessage = 251,
         CharacterStatsListMessage = 500,
         TextInformationMessage = 780,
         ChannelEnablingChangeMessage = 891,
         EnabledChannelsMessage = 892,
+        GameMapChangeOrientationMessage = 946,
         GameMapMovementMessage = 951,
         SpellListMessage = 1200,
         StartupActionsListMessage = 1301,
@@ -33,12 +35,17 @@
         FriendsListMessage = 4002,
         SetUpdateMessage = 5503,
         FriendWarnOnConnectionStateMessage = 5630,
+        GameRolePlayShowActorMessage = 5632,
         JobCrafterDirectorySettingsMessage = 5652,
         JobDescriptionMessage = 5655,
         IgnoredListMessage = 5674,
         LifePointsRegenBeginMessage = 5684,
         EmoteListMessage = 5689,
+        InteractiveElementUpdatedMessage = 5708,
+        StatedElementUpdatedMessage = 5709,
+        InteractiveUsedMessage = 5745,
         JobExperienceMultiUpdateMessage = 5809,
+        BasicLatencyStatsRequestMessage = 5816,
         AlignmentRankUpdateMessage = 6058,
         FriendWarnOnLevelGainStateMessage = 6078,
         NotificationListMessage = 6087,

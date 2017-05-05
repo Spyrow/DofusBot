@@ -86,6 +86,7 @@ namespace DofusBot.Protocol.Network.Messages.Game.Inventory.Items
         
         public override void Serialize(IDataWriter writer)
         {
+            writer.WriteVarUhShort(m_setId);
             writer.WriteShort(((short)(m_setObjects.Count)));
             int setObjectsIndex;
             for (setObjectsIndex = 0; (setObjectsIndex < m_setObjects.Count); setObjectsIndex = (setObjectsIndex + 1))
@@ -100,11 +101,11 @@ namespace DofusBot.Protocol.Network.Messages.Game.Inventory.Items
                 writer.WriteUShort(((ushort)(objectToSend.TypeID)));
                 objectToSend.Serialize(writer);
             }
-            writer.WriteVarUhShort(m_setId);
         }
         
         public override void Deserialize(IDataReader reader)
         {
+            m_setId = reader.ReadVarUhShort();
             int setObjectsCount = reader.ReadUShort();
             int setObjectsIndex;
             m_setObjects = new System.Collections.Generic.List<ushort>();
@@ -121,7 +122,6 @@ namespace DofusBot.Protocol.Network.Messages.Game.Inventory.Items
                 objectToAdd.Deserialize(reader);
                 m_setEffects.Add(objectToAdd);
             }
-            m_setId = reader.ReadVarUhShort();
         }
     }
 }

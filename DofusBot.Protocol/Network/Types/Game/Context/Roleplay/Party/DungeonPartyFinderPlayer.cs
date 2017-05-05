@@ -12,7 +12,6 @@ namespace DofusBot.Protocol.Network.Types.Game.Context.Roleplay.Party
 {
     using DofusBot.Protocol;
 
-
     public class DungeonPartyFinderPlayer : NetworkType
     {
         

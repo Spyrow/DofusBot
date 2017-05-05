@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿ 
+using System.Collections.Generic;
 
 namespace DofusBot.Protocol.Network.Messages.Game.Approach
 {
-    public class ServerOptionalFeaturesMessage : NetworkMessage
+    class ServerOptionalFeaturesMessage : NetworkMessage
     {
         public const int ProtocolId = 6305;
         public override int MessageID { get { return ProtocolId; } }

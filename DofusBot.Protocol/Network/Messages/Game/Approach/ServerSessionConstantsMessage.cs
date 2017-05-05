@@ -1,9 +1,10 @@
-﻿using DofusBot.Protocol.Network.Types.Game.Approach;
+﻿ 
+using DofusBot.Protocol.Network.Types.Game.Approach;
 using System.Collections.Generic;
 
 namespace DofusBot.Protocol.Network.Messages.Game.Approach
 {
-    public class ServerSessionConstantsMessage : NetworkMessage
+    class ServerSessionConstantsMessage : NetworkMessage
     {
         public const int ProtocolId = 6434;
         public override int MessageID { get { return ProtocolId; } }

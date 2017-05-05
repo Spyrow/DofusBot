@@ -31,21 +31,29 @@ namespace DofusBot.Network
             byte[] buffer;
             int bufferSize;
             while (true)
-            {
-                receiverBuffer = new byte[500];
-                bufferSize = _socket.Receive(receiverBuffer);
-                /*if (bufferSize == 0)
-                    Environment.Exit(0);*/
-                buffer = new byte[bufferSize];
-                Array.Copy(receiverBuffer, 0, buffer, 0, bufferSize);
-                _buffer.Enqueu(buffer);
+            {         
+                try
+                {
+                    receiverBuffer = new byte[500];
+                    bufferSize = _socket.Receive(receiverBuffer);
+                    /*if (bufferSize == 0)
+                        Environment.Exit(0);*/
+                    buffer = new byte[bufferSize];
+                    Array.Copy(receiverBuffer, 0, buffer, 0, bufferSize);
+                    _buffer.Enqueu(buffer);
+                }
+                catch (Exception e) { }
             }
             
         }
 
         public void ConnectEndListen()
         {
-            _socket.Connect(_endPoint);
+            try
+            {
+                _socket.Connect(_endPoint);
+            } catch(Exception e) {}
+            
             _listeningThread.Start();
         }
 

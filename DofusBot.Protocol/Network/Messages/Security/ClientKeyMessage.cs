@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Security
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Security
 {
     public class ClientKeyMessage : NetworkMessage
     {

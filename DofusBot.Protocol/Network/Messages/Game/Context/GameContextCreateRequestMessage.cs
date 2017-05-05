@@ -1,4 +1,6 @@
-﻿namespace DofusBot.Protocol.Network.Messages.Game.Context
+﻿ 
+
+namespace DofusBot.Protocol.Network.Messages.Game.Context
 {
     public class GameContextCreateRequestMessage : NetworkMessage
     {
